@@ -116,7 +116,7 @@
                             <AnchorPane fx:id="algorithmsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="252.0">
                                  <children>
                                     <Button fx:id="floidAlgorithmButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFloydAlgorithmButtonClick" prefHeight="52.0" prefWidth="226.0" text="Матрица кратчайших расстояний (Алгоритм Флоида)" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="deykstraAlgorithmButton" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#onDeykstraAlgorithmButtonClick" prefHeight="45.0" prefWidth="226.0" text="Поиск оптимального пути (алгоритм Дейкстра)" textAlignment="CENTER" wrapText="true" />
+                                    <Button fx:id="deykstraAlgorithmButton" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#onDijkstraAlgorithmButtonClick" prefHeight="45.0" prefWidth="226.0" text="Поиск оптимального пути (алгоритм Дейкстра)" textAlignment="CENTER" wrapText="true" />
                                     <Button fx:id="shortesNetworkButton" layoutX="14.0" layoutY="139.0" mnemonicParsing="false" onAction="#onShortestNetworkButtonClick" prefHeight="38.0" prefWidth="226.0" text="Кратчайшая связующая сеть" />
                                  </children>
                               </AnchorPane>

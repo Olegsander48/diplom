@@ -82,7 +82,7 @@ public class HelloController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("О программе");
         stage.setResizable(false);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }

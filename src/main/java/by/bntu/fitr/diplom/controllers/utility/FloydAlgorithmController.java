@@ -2,6 +2,7 @@ package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
 import by.bntu.fitr.diplom.controllers.algorithms.FloydAlgorithm;
+import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -23,7 +24,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class FloydAlgorithmController implements Initializable {
+public class FloydAlgorithmController extends Controller implements Initializable {
     @FXML
     private Tab firstTab, secondTab;
     @FXML
@@ -34,6 +35,7 @@ public class FloydAlgorithmController implements Initializable {
     private List<Vertex> vertexList;
     private List<Road> roadList;
     private FloydAlgorithm floydAlgorithm;
+    private boolean speedLimit;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,7 +51,7 @@ public class FloydAlgorithmController implements Initializable {
             updateTables();
         });
 
-        progressBarAnimation();
+        progressBarAnimation(floydProgressBar);
     }
 
     @FXML
@@ -63,8 +65,6 @@ public class FloydAlgorithmController implements Initializable {
         );
         File selectedFile = fileChooser.showSaveDialog(stage);
         if (selectedFile != null) {
-            boolean speedLimit = newMapController.getStateOfShortestParamRadioBtn();
-
             Workbook book = new HSSFWorkbook();
             Sheet firstSheet = book.createSheet(firstTab.getText());
             loadDataToCells(firstSheet, floydAlgorithm.getMatrixOfOptimalConnections(speedLimit));
@@ -174,17 +174,19 @@ public class FloydAlgorithmController implements Initializable {
     }
 
     private void updateTables() {
-        boolean speedLimit = newMapController.getStateOfShortestParamRadioBtn();
+        speedLimit = !newMapController.getShortestParamRadioBtn().isSelected();
         loadDataToTable(floydAlgorithm.getMatrixOfOptimalConnections(speedLimit), firstTableView);
         loadDataToTable(floydAlgorithm.getTransportNetworkModel(speedLimit), secondTableView);
     }
 
-    private void progressBarAnimation() {
+    public void progressBarAnimation(ProgressBar progressBar) {
         for (double i = 0; i <= 1; i+= 0.1) {
-            floydProgressBar.setProgress(i);
+            progressBar.setProgress(i);
         }
+        progressBar.setStyle("-fx-accent: green");
     }
 
+    @Override
     public void setNewMapController(NewMapController newMapController) {
         this.newMapController = newMapController;
     }

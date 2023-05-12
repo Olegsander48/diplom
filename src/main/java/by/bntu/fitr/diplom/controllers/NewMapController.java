@@ -1,8 +1,8 @@
 package by.bntu.fitr.diplom.controllers;
 
 import by.bntu.fitr.diplom.HelloApplication;
-import by.bntu.fitr.diplom.controllers.utility.FloydAlgorithmController;
-import by.bntu.fitr.diplom.controllers.utility.*;
+import by.bntu.fitr.diplom.controllers.utility.AddVertexesController;
+import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.SerializableShape;
 import by.bntu.fitr.diplom.model.Vertex;
@@ -23,7 +23,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -102,6 +105,7 @@ public class NewMapController implements Initializable {
     private List<Road> roads = new ArrayList<>(); //коллекция, хранящая все дороги
     private double mousePositionX, mousePositionY; //изначальные координаты мыши при нажатии
     private double scalesStep;
+    private ToggleGroup parametersRadioPane;
     private int vertexSize = 1;
 
 
@@ -139,7 +143,7 @@ public class NewMapController implements Initializable {
         connectionPane.setCollapsible(false);
 
         parametersPane.setCollapsible(false);
-        ToggleGroup parametersRadioPane = new ToggleGroup();
+        parametersRadioPane = new ToggleGroup();
         shortestParamRadioBtn.setToggleGroup(parametersRadioPane);
         shortestParamRadioBtn.setSelected(true);
         fastestParamRadioBtn.setToggleGroup(parametersRadioPane);
@@ -248,29 +252,16 @@ public class NewMapController implements Initializable {
     /**
      * метод, срабатывающий при нажатии на крестик окна с основной картой
      */
-    public void onCloseWindowAction(String stageTitle) { //метод, срабатывающий при нажатии на крестик окна с основной картой
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/save-map-view.fxml"));
-        Scene scene;
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Stage stage = new Stage();
-        stage.setTitle(stageTitle);
-        stage.setResizable(false);
-        stage.initModality(Modality.WINDOW_MODAL);
-
-        SaveMapController controller = fxmlLoader.getController();
-        controller.setNewMapController(this);
-
-        stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/ci49дискета.png").toURI().toString()));
-        stage.setScene(scene);
-        stage.show();
+    public void onCloseWindowAction(String stageTitle) {
+        loadNewWindow("views/utility/save-map-view.fxml",
+                stageTitle,
+                "src/main/resources/by/bntu/fitr/diplom/images/ci49дискета.png",
+                Modality.APPLICATION_MODAL,
+                0);
     }
 
     /**
-     * метод обработки нажатия по ImageView
+     * Метод обработки нажатия по ImageView
      * открывается окно создания вершины для ввода данных, которые необходимо будет разместить на карте
      */
     @FXML
@@ -429,53 +420,32 @@ public class NewMapController implements Initializable {
     }
 
     @FXML
-    private void onDeleteVertexBtnClick() throws IOException {
+    private void onDeleteVertexBtnClick() {
         if (vertexes.size() != 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/delete-vertex-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Удалить вершину?");
-            stage.setResizable(false);
-            stage.initModality(Modality.WINDOW_MODAL);
-            DeleteVertexController controller = fxmlLoader.getController();
-            controller.setNewMapController(this);
-
-            stage.setScene(scene);
-            stage.show();
+            loadNewWindow("views/utility/delete-vertex-view.fxml",
+                    "Удалить вершину?",
+                    null,
+                    Modality.APPLICATION_MODAL,
+                    0);
         }
     }
 
     @FXML
-    private void onAddConnectionBtnClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/add-road-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Добавить маршрут");
-        stage.setResizable(false);
-        stage.initModality(Modality.WINDOW_MODAL);
-
-        AddRoadController controller = fxmlLoader.getController();
-        controller.setNewMapController(this);
-        controller.setScale(scalesStep);
-
-        stage.setScene(scene);
-        stage.show();
+    private void onAddConnectionBtnClick() {
+        loadNewWindow("views/utility/add-road-view.fxml",
+                "Добавить маршрут",
+                null,
+                Modality.WINDOW_MODAL,
+                scalesStep);
     }
 
     @FXML
-    private void onDeleteConnectionBtnClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/delete-road-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Удалить маршрут");
-        stage.setResizable(false);
-        stage.initModality(Modality.WINDOW_MODAL);
-
-        DeleteRoadController controller = fxmlLoader.getController();
-        controller.setNewMapController(this);
-
-        stage.setScene(scene);
-        stage.show();
+    private void onDeleteConnectionBtnClick() {
+        loadNewWindow("views/utility/delete-road-view.fxml",
+                "Удалить маршрут?",
+                null,
+                Modality.APPLICATION_MODAL,
+                0);
     }
 
     private void checkCollectionForSize(Predicate<Integer> predicate, Button button, List collection) {
@@ -514,7 +484,7 @@ public class NewMapController implements Initializable {
         roadsCountLabel.setText(String.valueOf(roads.size()));
     }
 
-    public int getVertexSize() {
+    public int getVertexSize() { //todo данный метод вызывает сомнения в его необходимости
         return vertexSize;
     }
 
@@ -528,36 +498,14 @@ public class NewMapController implements Initializable {
     }
 
     @FXML
-    private void onFloydAlgorithmButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/floyd-algorithm-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle());
-        stage.setResizable(false);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png").toURI().toString()));
-
-        FloydAlgorithmController controller = fxmlLoader.getController();
-        controller.setNewMapController(this);
-
-        stage.setScene(scene);
-        stage.show();
-
+    private void onFloydAlgorithmButtonClick() {
         //todo расскоментировать по завершению работы над алгоритмом флойда
-        /*if (vertexes.size() >= 2 && roads.size() != 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/algorithms/floyd-algorithm-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle());
-            stage.setResizable(false);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png").toURI().toString()));
-
-            FloydAlgorithmController controller = fxmlLoader.getController();
-            controller.setNewMapController(this);
-
-            stage.setScene(scene);
-            stage.show();
+        if (vertexes.size() >= 2 && roads.size() != 0) {
+            loadNewWindow("views/utility/floyd-algorithm-view.fxml",
+                    "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
+                    "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
+                    Modality.WINDOW_MODAL,
+                    0);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Не создана транспортная сеть");
@@ -565,12 +513,16 @@ public class NewMapController implements Initializable {
             alert.setContentText("Создайте транспортную сеть!");
 
             alert.showAndWait();
-        }*/
+        }
     }
 
     @FXML
-    private void onDeykstraAlgorithmButtonClick() {
-        //loadDataFromFile(); //todo надо убрать этот вызов когда буду делать алгоритм
+    private void onDijkstraAlgorithmButtonClick() {
+        loadNewWindow("views/utility/input-dijkstra-view.fxml",
+                "Выбор маршрута",
+                "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
+                Modality.APPLICATION_MODAL,
+                0);
     }
 
     @FXML
@@ -690,15 +642,47 @@ public class NewMapController implements Initializable {
         });
     }
 
-    public boolean getStateOfShortestParamRadioBtn() {
-        return !shortestParamRadioBtn.isSelected();
+    public RadioButton getShortestParamRadioBtn() {
+        return shortestParamRadioBtn;
     }
 
-    public boolean getStateOfFastestParamRadioBtn() {
-        return fastestParamRadioBtn.isSelected();
+    public RadioButton getFastestParamRadioBtn() {
+        return fastestParamRadioBtn;
     }
 
-    public boolean getStateOfEconomicalParamRadioBtn() {
-        return economicalParamRadioBtn.isSelected();
+    public RadioButton getEconomicalParamRadioBtn() {
+        return economicalParamRadioBtn;
+    }
+
+    public void closeWindow(Button button) {
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();
+    }
+
+    public ToggleGroup getParametersRadioPane() {
+        return parametersRadioPane;
+    }
+
+    private void loadNewWindow(String resourceName, String pageTitle, String iconPathFromContentRoot, Modality modality, double scale) {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(resourceName));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = new Stage();
+        stage.setTitle(pageTitle);
+        stage.setResizable(false);
+        stage.initModality(modality);
+        if (iconPathFromContentRoot != null) {
+            stage.getIcons().add(new Image(new File(iconPathFromContentRoot).toURI().toString()));
+        }
+
+        ((Controller) fxmlLoader.getController()).setNewMapController(this);
+        ((Controller) fxmlLoader.getController()).setScale(scale);
+
+        stage.setScene(scene);
+        stage.show();
     }
 }

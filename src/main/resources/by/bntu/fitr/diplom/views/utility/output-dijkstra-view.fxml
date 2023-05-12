@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="365.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.diplom.controllers.utility.OutputDijkstraController">
+   <children>
+      <TableView fx:id="dijkstraTableView" layoutX="8.0" layoutY="7.0" prefHeight="290.0" prefWidth="465.0" />
+      <ProgressBar fx:id="dijkstraProgressBar" layoutX="14.0" layoutY="315.0" prefHeight="30.0" prefWidth="454.0" progress="0.0" />
+      <TitledPane fx:id="routeParamsTitledPane" animated="false" layoutX="484.0" layoutY="6.0" prefHeight="290.0" prefWidth="202.0" text="Парметры маршрута">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="199.0">
+               <children>
+                  <Label layoutX="8.0" layoutY="14.0" text="Начало маршрута:" />
+                  <Label fx:id="beginnigRouteLabel" layoutX="9.0" layoutY="39.0" prefHeight="20.0" prefWidth="66.0" text="1231231">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="8.0" layoutY="73.0" text="Конец маршрута:" />
+                  <Label fx:id="endRouteLabel" layoutX="9.0" layoutY="97.0" text="122121">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="8.0" layoutY="138.0" text="Суммарные:" />
+                  <Label layoutX="18.0" layoutY="162.0" text="- расстояние: " />
+                  <Label layoutX="18.0" layoutY="186.0" text="- время:" />
+                  <Label layoutX="20.0" layoutY="210.0" text="- затраты:" />
+                  <Label fx:id="totalDistanceLabel" layoutX="98.0" layoutY="162.0" text="1">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalTimeLabel" layoutX="74.0" layoutY="186.0" text="2">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalCostsLabel" layoutX="81.0" layoutY="210.0" text="3">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Button layoutX="484.0" layoutY="309.0" mnemonicParsing="false" onAction="#saveDataToExcel" prefHeight="42.0" prefWidth="202.0" text="Сохранить в Excel">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

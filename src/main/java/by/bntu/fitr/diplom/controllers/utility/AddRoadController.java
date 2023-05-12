@@ -1,6 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
+import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -16,7 +17,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddRoadController implements Initializable {
+public class AddRoadController extends Controller implements Initializable {
     @FXML
     private TitledPane straightPane, backwardPane;
     @FXML
@@ -153,6 +154,7 @@ public class AddRoadController implements Initializable {
             if (directionCheckBox.isSelected()) {
                 saveRoadToCollection(startVertex, endVertex, 10, 10, 10, 10, 20);
             } else {
+                //todo финальная версия, но хотелось бы чтобы при угле +- 90 градусов ровнее отображалось
                 if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
                     saveRoadToCollection(startVertex, endVertex, 15, 10, 10, 5, 20);
                     saveRoadToCollection(endVertex, startVertex, 5, 10, 10, 15, -20);
@@ -166,36 +168,6 @@ public class AddRoadController implements Initializable {
                     saveRoadToCollection(startVertex, endVertex, 10, 15, 15, 10, 20);
                     saveRoadToCollection(endVertex, startVertex, 10, 5, 5, 10, -20);
                 }
-
-                //финальная версия, но хотелось бы чтобы при угле +- 90 градусов ровнее отображалось
-                /*if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 15, 10, 10, 5, 20);
-                    saveRoadToCollection(endVertex, startVertex, 5, 10, 10, 15, -20);
-                } else if (endVertex.getMousePositionX() < startVertex.getMousePositionX() && endVertex.getMousePositionY() < startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 5, 10, 10, 15, 20);
-                    saveRoadToCollection(endVertex, startVertex, 15, 10, 10, 5, -20);
-                } else if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() < startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 10, 5, 5, 10, 20);
-                    saveRoadToCollection(endVertex, startVertex, 10, 15, 15, 10, -20);
-                } else if (endVertex.getMousePositionX() < startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 10, 15, 15, 10, 20);
-                    saveRoadToCollection(endVertex, startVertex, 10, 5, 5, 10, -20);
-                }*/
-
-                //изначальное смещение прикрепления дорог
-                /*if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 20, 15, 5, 0, 20);
-                    saveRoadToCollection(endVertex, startVertex, 0, 5, 15, 20, -20);
-                } else if (endVertex.getMousePositionX() < startVertex.getMousePositionX() && endVertex.getMousePositionY() < startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 0, 5, 15, 20, 20);
-                    saveRoadToCollection(endVertex, startVertex, 20, 15, 5, 0, -20);
-                } else if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() < startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 15, 0, 0, 15, 20);
-                    saveRoadToCollection(endVertex, startVertex, 5, 20, 20, 5, -20);
-                } else if (endVertex.getMousePositionX() < startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
-                    saveRoadToCollection(startVertex, endVertex, 5, 20, 20, 5, 20);
-                    saveRoadToCollection(endVertex, startVertex, 15, 0, 0, 15, -20);
-                }*/
             }
 
             Stage stage = (Stage) startComboBox.getScene().getWindow();
@@ -241,6 +213,7 @@ public class AddRoadController implements Initializable {
                 .get();
     }
 
+    @Override
     public void setNewMapController(NewMapController newMapController) {
         this.newMapController = newMapController;
     }
@@ -250,6 +223,7 @@ public class AddRoadController implements Initializable {
         endComboBox.setItems(FXCollections.observableArrayList(elements));
     }
 
+    @Override
     public void setScale(double scale) {
         this.scale = scale;
     }

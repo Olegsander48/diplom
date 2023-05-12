@@ -1,6 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
+import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class DeleteVertexController implements Initializable {
+public class DeleteVertexController extends Controller implements Initializable {
     @FXML
     private ComboBox<String> vertexesComboBox;
 
@@ -74,6 +75,7 @@ public class DeleteVertexController implements Initializable {
 
     }
 
+    @Override
     public void setNewMapController(NewMapController newMapController) {
         this.newMapController = newMapController;
     }

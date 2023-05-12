@@ -1,6 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
+import by.bntu.fitr.diplom.model.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  *  @author Prigodich A.N.
  *  @version 1.0.1.2
  * */
-public class SaveMapController implements Initializable {
+public class SaveMapController extends Controller implements Initializable {
     @FXML
     private Pane saveMapPane;
     private NewMapController newMapController;
@@ -46,6 +47,7 @@ public class SaveMapController implements Initializable {
         stage.close();
     }
 
+    @Override
     public void setNewMapController(NewMapController newMapController) {
         this.newMapController = newMapController;
     }

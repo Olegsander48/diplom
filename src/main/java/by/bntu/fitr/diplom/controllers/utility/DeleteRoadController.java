@@ -1,6 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
+import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -15,7 +16,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DeleteRoadController implements Initializable {
+public class DeleteRoadController extends Controller implements Initializable {
     @FXML
     private TitledPane straightPane, backwardPane;
     @FXML
@@ -24,6 +25,8 @@ public class DeleteRoadController implements Initializable {
     private CheckBox directionCheckBox;
     @FXML
     private ComboBox<String> startComboBox, endComboBox;
+    @FXML
+    private Button clearDataBtn;
 
 
     private NewMapController newMapController;
@@ -145,12 +148,12 @@ public class DeleteRoadController implements Initializable {
         endComboBox.setItems(FXCollections.observableArrayList(elements));
     }
 
+    @Override
     public void setNewMapController(NewMapController newMapController) {
         this.newMapController = newMapController;
     }
 
     private void closeWindow() {
-        Stage stage = (Stage) startComboBox.getScene().getWindow();
-        stage.close();
+        newMapController.closeWindow(clearDataBtn);
     }
 }

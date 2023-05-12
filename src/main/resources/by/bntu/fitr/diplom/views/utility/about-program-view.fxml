@@ -31,6 +31,6 @@
          </font>
       </Label>
       <TextArea disable="true" layoutX="229.0" layoutY="115.0" prefHeight="129.0" prefWidth="298.0" />
-      <Button layoutX="285.0" layoutY="259.0" mnemonicParsing="false" onAction="#onOkButtonClick" prefHeight="26.0" prefWidth="185.0" text="OK" />
+      <Button fx:id="suggestButton" layoutX="285.0" layoutY="259.0" mnemonicParsing="false" onAction="#onOkButtonClick" prefHeight="26.0" prefWidth="185.0" text="OK" />
    </children>
 </AnchorPane>
