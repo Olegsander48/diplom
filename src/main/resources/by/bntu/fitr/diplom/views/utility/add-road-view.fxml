@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="444.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.diplom.controllers.utility.AddRoadController">
+   <children>
+      <CheckBox fx:id="directionCheckBox" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#onDirectionCheckBoxClick" text="Одностороннее движение" />
+      <TitledPane fx:id="straightPane" animated="false" layoutX="25.0" layoutY="49.0" prefHeight="332.0" prefWidth="255.0" text="Прямое направление от А до Б">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Начальная вершина А" />
+                  <ComboBox fx:id="startComboBox" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="177.0" />
+                  <Label layoutX="14.0" layoutY="81.0" text="Конечная вершина Б" />
+                  <ComboBox fx:id="endComboBox" layoutX="14.0" layoutY="99.0" prefHeight="26.0" prefWidth="179.0" />
+                  <Label layoutX="14.0" layoutY="144.0" text="Класс дороги" />
+                  <ComboBox fx:id="roadClassComboBox" layoutX="14.0" layoutY="162.0" onAction="#onRoadClassComboBoxSelected" prefHeight="26.0" prefWidth="126.0" />
+                  <Label fx:id="straightSpeedLabel" layoutX="14.0" layoutY="209.0" text="Разрешенная скорость:" />
+                  <Label layoutX="14.0" layoutY="238.0" text="Расстояние, км:" />
+                  <TextField fx:id="straightTextField" layoutX="14.0" layoutY="256.0" onKeyReleased="#onStraightTextFieldTextEntered" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane fx:id="backwardPane" animated="false" layoutX="321.0" layoutY="49.0" prefHeight="332.0" prefWidth="255.0" text="Обратное направление от Б до А">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Начальная вершина Б" />
+                  <Label layoutX="14.0" layoutY="81.0" text="Конечная вершина А" />
+                  <Label layoutX="14.0" layoutY="144.0" text="Класс дороги:" />
+                  <Label fx:id="backwardSpeedLabel" layoutX="14.0" layoutY="209.0" text="Разрешенная скорость:" />
+                  <Label layoutX="14.0" layoutY="238.0" text="Расстояние, км:" />
+                  <TextField fx:id="backwardTextField" layoutX="14.0" layoutY="256.0" />
+                  <Label fx:id="backwardVertexALabel" layoutX="14.0" layoutY="32.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="backwardVertexBLabel" layoutX="14.0" layoutY="99.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="backwardRoadClassLabel" layoutX="14.0" layoutY="162.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Button fx:id="roadBtn" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#onAddRoadButtonClick" prefHeight="26.0" prefWidth="234.0" text="Добавить дорогу" />
+      <Button fx:id="clearDataBtn" layoutX="339.0" layoutY="403.0" mnemonicParsing="false" onAction="#onClearDataButtonClick" prefHeight="26.0" prefWidth="218.0" text="Очистить данные" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="1011.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.diplom.controllers.NewMapController">
+   <children>
+      <TabPane prefHeight="681.0" prefWidth="286.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabEdit" text="Редактировать">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="629.0" prefWidth="286.0">
+                     <children>
+                        <Button fx:id="blockMapBtn" layoutX="18.0" layoutY="16.0" mnemonicParsing="false" onAction="#onBlockMapButtonClick" prefHeight="26.0" prefWidth="163.0" text="Блокировать карту" textFill="#1e1a89" />
+                        <ImageView fx:id="blockMapImage" fitHeight="30.0" fitWidth="30.0" layoutX="202.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ci18закрыто.png" />
+                           </image></ImageView>
+                        <TitledPane fx:id="substratePane" animated="false" layoutX="18.0" layoutY="57.0" prefHeight="166.0" prefWidth="250.0" text="Подложка">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="142.0" prefWidth="249.0">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Масштаб:" />
+                                    <ComboBox fx:id="scalesComboBox" layoutX="75.0" layoutY="10.0" onAction="#onScalesComboBoxChanged" prefHeight="11.0" prefWidth="103.0" />
+                                    <Text layoutX="185.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/ci78подложкаВерт.png" />
+                                       </image>
+                                    </ImageView>
+                                    <RadioButton fx:id="addRadioBtn" layoutX="64.0" layoutY="49.0" mnemonicParsing="false" text="добавить" />
+                                    <RadioButton fx:id="hideRadioBtn" layoutX="155.0" layoutY="49.0" mnemonicParsing="false" text="скрыть" />
+                                    <RadioButton fx:id="showRadioBtn" layoutX="156.0" layoutY="78.0" mnemonicParsing="false" text="отобразить" />
+                                    <RadioButton fx:id="deleteRadioBtn" layoutX="157.0" layoutY="103.0" mnemonicParsing="false" text="удалить" />
+                                    <Button fx:id="addSubstrateBtn" layoutX="40.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddSubstrateBtnClick" prefHeight="26.0" prefWidth="84.0" text="добавить" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane fx:id="internetPane" animated="false" layoutX="18.0" layoutY="236.0" prefHeight="87.0" prefWidth="250.0" text="Поиск в интернете">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="249.0">
+                                 <children>
+                                    <ComboBox fx:id="searchersComboBox" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="164.0" />
+                                    <Button layoutX="193.0" layoutY="10.0" mnemonicParsing="false">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/ci16земнойШар.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane fx:id="vertexPane" animated="false" layoutX="18.0" layoutY="333.0" prefHeight="166.0" prefWidth="251.0" text="Выберите тип вершины:">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="127.0" prefWidth="250.0">
+                                 <children>
+                                    <RadioButton fx:id="cityRadioBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Населенный пункт" />
+                                    <RadioButton fx:id="crossroadsRadioBtn" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Перекресток" />
+                                    <RadioButton fx:id="roadObjectRadioBtn" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" text="Дорожный объект" />
+                                    <Button fx:id="deleteVertexBtn" layoutX="62.0" layoutY="99.0" mnemonicParsing="false" onAction="#onDeleteVertexBtnClick" prefHeight="26.0" prefWidth="125.0" text="Удалить вершину" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <Text layoutX="18.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество связей:" />
+                        <TitledPane fx:id="connectionPane" animated="false" layoutX="17.0" layoutY="509.0" prefHeight="110.0" prefWidth="253.0" text="Связи">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="89.0" prefWidth="252.0">
+                                 <children>
+                                    <Button fx:id="addConnectionBtn" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddConnectionBtnClick" prefHeight="26.0" prefWidth="225.0" text="Добавить связь" />
+                                    <Button fx:id="deleteConnectionBtn" layoutX="12.0" layoutY="49.0" mnemonicParsing="false" onAction="#onDeleteConnectionBtnClick" prefHeight="25.0" prefWidth="224.0" text="Удалить" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <Label fx:id="roadsCountLabel" layoutX="130.0" layoutY="627.0" text="0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Результат">
+            <content>
+              <AnchorPane fx:id="resultAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane fx:id="parametersPane" animated="false" layoutX="14.0" layoutY="27.0" prefHeight="163.0" prefWidth="254.0" text="Параметры">
+                          <content>
+                            <AnchorPane fx:id="paramsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="145.0" prefWidth="252.0">
+                                 <children>
+                                    <RadioButton fx:id="shortestParamRadioBtn" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" text="кратчайший" />
+                                    <RadioButton fx:id="fastestParamRadioBtn" layoutX="14.0" layoutY="58.0" mnemonicParsing="false" text="быстрейший" />
+                                    <RadioButton fx:id="economicalParamRadioBtn" layoutX="14.0" layoutY="93.0" mnemonicParsing="false" text="с наименьшими затратами" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane fx:id="algorithmsPane" animated="false" layoutX="14.0" layoutY="239.0" prefHeight="223.0" prefWidth="254.0" text="Алгортимы">
+                          <content>
+                            <AnchorPane fx:id="algorithmsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="252.0">
+                                 <children>
+                                    <Button fx:id="floidAlgorithmButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFloydAlgorithmButtonClick" prefHeight="52.0" prefWidth="226.0" text="Матрица кратчайших расстояний (Алгоритм Флоида)" textAlignment="CENTER" wrapText="true" />
+                                    <Button fx:id="deykstraAlgorithmButton" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#onDeykstraAlgorithmButtonClick" prefHeight="45.0" prefWidth="226.0" text="Поиск оптимального пути (алгоритм Дейкстра)" textAlignment="CENTER" wrapText="true" />
+                                    <Button fx:id="shortesNetworkButton" layoutX="14.0" layoutY="139.0" mnemonicParsing="false" onAction="#onShortestNetworkButtonClick" prefHeight="38.0" prefWidth="226.0" text="Кратчайшая связующая сеть" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="reRouteButton" layoutX="17.0" layoutY="687.0" mnemonicParsing="false" onAction="#onReRouteButtonClick" prefHeight="25.0" prefWidth="253.0" text="Переустановить маршрут" />
+      <ToolBar fx:id="mainMapInfoToolBar" layoutX="296.0" layoutY="686.0" prefHeight="28.0" prefWidth="447.0">
+         <items>
+            <Label fx:id="coordinatesLabel" text="Координаты:" />
+            <Separator orientation="VERTICAL" prefHeight="18.0" />
+            <Label fx:id="vertexesCountlabel" text="Количество вершин: 0" />
+         </items>
+      </ToolBar>
+      <ToolBar layoutX="758.0" layoutY="686.0" prefHeight="28.0" prefWidth="230.0">
+         <items>
+            <Label text="Состояние панели:  " />
+            <ImageView fx:id="blockMapStateBarImage" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ci19открыто.png" />
+               </image>
+            </ImageView>
+            <Separator orientation="VERTICAL" prefHeight="18.0" />
+            <ImageView fx:id="saveMapStateBarImage" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ci49дискета.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="printMapStateBarImage" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ci44принтер.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="helpStateBarImage" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/search.png" />
+               </image>
+            </ImageView>
+         </items>
+      </ToolBar>
+      <ScrollPane fx:id="mainMapImageScrollPane" layoutX="291.0" layoutY="5.0" prefHeight="673.0" prefWidth="710.0">
+         <content>
+            <ImageView fx:id="mainMapImageView" fitHeight="665.0" fitWidth="824.0" onMouseClicked="#onImageViewMouseClick" onMouseMoved="#onMouseDragDetected" pickOnBounds="true" preserveRatio="true" />
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

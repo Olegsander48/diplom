@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="234.0" prefWidth="463.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.diplom.controllers.utility.AddVertexesController">
+   <children>
+      <Label fx:id="mainTextLabel" layoutX="30.0" layoutY="14.0" prefHeight="20.0" prefWidth="352.0" text="Введите название населенного пункта:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="vertexNameTextField" layoutX="30.0" layoutY="52.0" onAction="#onTextFieldTextEntered" prefHeight="26.0" prefWidth="223.0" />
+      <Label layoutX="34.0" layoutY="92.0" text="Фон вершины:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="132.0" text="Цвет оконтовки:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="172.0" text="Размер вершины:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="suggestButton" layoutX="309.0" layoutY="165.0" mnemonicParsing="false" onAction="#onSuggestButtonClick" prefHeight="22.0" prefWidth="122.0" text="OK">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="fontSizesComboBox" layoutX="184.0" layoutY="172.0" onAction="#onComboBoxSelected" prefHeight="26.0" prefWidth="90.0" />
+      <ColorPicker fx:id="backgroundColorPicker" layoutX="185.0" layoutY="92.0" onAction="#onComboBoxSelected" prefHeight="26.0" prefWidth="89.0">
+         <value>
+            <Color red="1.0" green="1.0" />
+         </value>
+      </ColorPicker>
+      <ColorPicker fx:id="borderColorPicker" layoutX="185.0" layoutY="132.0" onAction="#onComboBoxSelected" prefHeight="26.0" prefWidth="90.0">
+         <value>
+            <Color red="1.0" />
+         </value>
+      </ColorPicker>
+      <BorderPane fx:id="figureBorderPane" layoutX="313.0" layoutY="51.0" prefHeight="102.0" prefWidth="114.0" />
+   </children>
+</AnchorPane>

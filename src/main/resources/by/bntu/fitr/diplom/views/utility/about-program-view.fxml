@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="298.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.diplom.controllers.utility.AboutProgramController">
+   <children>
+      <ImageView fitHeight="198.0" fitWidth="275.0" layoutX="-19.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+         <image>
+            <Image url="@../../images/20220806_201659.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="229.0" layoutY="20.0" text="DP_2023_PRIGODICH_BY">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="229.0" layoutY="50.0" text="Verson 1.0.0.1">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="229.0" layoutY="80.0" text="Copyright 2023">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea disable="true" layoutX="229.0" layoutY="115.0" prefHeight="129.0" prefWidth="298.0" />
+      <Button layoutX="285.0" layoutY="259.0" mnemonicParsing="false" onAction="#onOkButtonClick" prefHeight="26.0" prefWidth="185.0" text="OK" />
+   </children>
+</AnchorPane>
