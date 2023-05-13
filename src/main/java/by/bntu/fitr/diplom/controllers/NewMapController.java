@@ -42,52 +42,25 @@ import java.util.function.Predicate;
  * */
 public class NewMapController implements Initializable {
     @FXML
-    private Button blockMapBtn;
+    private Button blockMapBtn, addConnectionBtn, deleteConnectionBtn, deleteVertexBtn, addSubstrateBtn;
     @FXML
-    private ImageView blockMapImage;
-
-    @FXML
-    private TitledPane substratePane;
+    private TitledPane substratePane, internetPane, vertexPane, connectionPane, parametersPane, algorithmsPane;
     @FXML
     private ComboBox<Integer> scalesComboBox;
     @FXML
     private RadioButton addRadioBtn, hideRadioBtn, showRadioBtn, deleteRadioBtn;
     @FXML
-    private Button addSubstrateBtn;
-
-    @FXML
-    private TitledPane internetPane;
-    @FXML
     private ComboBox<String> searchersComboBox;
-
-    @FXML
-    private TitledPane vertexPane;
-
     @FXML
     private RadioButton cityRadioBtn, crossroadsRadioBtn, roadObjectRadioBtn;
     @FXML
-    private Button deleteVertexBtn;
-
-    @FXML
-    private TitledPane connectionPane;
-
-    @FXML
     private AnchorPane resultAnchorPane;
-
-    @FXML
-    private TitledPane parametersPane;
     @FXML
     private RadioButton shortestParamRadioBtn, fastestParamRadioBtn, economicalParamRadioBtn;
-
-    @FXML
-    private TitledPane algorithmsPane;
-
     @FXML
     private ImageView blockMapStateBarImage, saveMapStateBarImage, printMapStateBarImage, helpStateBarImage;
-
     @FXML
-    private ImageView mainMapImageView;
-
+    private ImageView mainMapImageView, blockMapImage;
     @FXML
     private ScrollPane mainMapImageScrollPane;
     @FXML
@@ -96,8 +69,6 @@ public class NewMapController implements Initializable {
     private AnchorPane algorithmsAnchorPane, paramsAnchorPane;
     @FXML
     private ToolBar mainMapInfoToolBar;
-    @FXML
-    private Button addConnectionBtn, deleteConnectionBtn;
 
     private double height, width; //высота и ширина пространства, содержащего изображение
     private Image loadedImage;
@@ -499,8 +470,14 @@ public class NewMapController implements Initializable {
 
     @FXML
     private void onFloydAlgorithmButtonClick() {
+        loadNewWindow("views/utility/floyd-algorithm-view.fxml",
+                "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
+                "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
+                Modality.WINDOW_MODAL,
+                0);
+
         //todo расскоментировать по завершению работы над алгоритмом флойда
-        if (vertexes.size() >= 2 && roads.size() != 0) {
+        /*if (vertexes.size() >= 2 && roads.size() != 0) {
             loadNewWindow("views/utility/floyd-algorithm-view.fxml",
                     "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
                     "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
@@ -513,7 +490,7 @@ public class NewMapController implements Initializable {
             alert.setContentText("Создайте транспортную сеть!");
 
             alert.showAndWait();
-        }
+        }*/
     }
 
     @FXML

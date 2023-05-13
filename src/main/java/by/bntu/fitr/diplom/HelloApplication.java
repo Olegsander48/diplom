@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        stage.setResizable(false); //todo запрет изменять размер окна
+        stage.setResizable(false);
         stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/main-logo.png").toURI().toString()));
         stage.setTitle("Дипломный проект");
         stage.show();

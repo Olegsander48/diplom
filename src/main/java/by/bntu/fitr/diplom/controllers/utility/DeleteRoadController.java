@@ -112,15 +112,7 @@ public class DeleteRoadController extends Controller implements Initializable {
     }
 
     private Vertex findElementInVertexes(ComboBox<String> comboBox) {
-        return newMapController
-                .getVertexes()
-                .stream()
-                .filter(vertex -> vertex
-                        .getLabel()
-                        .getText()
-                        .equals(comboBox.getSelectionModel().getSelectedItem()))
-                .findFirst()
-                .get();
+        return new AddRoadController().findElementInVertexes(comboBox);
     }
 
     @FXML

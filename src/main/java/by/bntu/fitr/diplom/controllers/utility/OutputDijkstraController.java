@@ -35,6 +35,7 @@ public class OutputDijkstraController implements Initializable {
 
     private NewMapController newMapController;
     private String departurePoint, arrivalPoint;
+    private FloydAlgorithmController floydAlgorithmController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,7 +48,9 @@ public class OutputDijkstraController implements Initializable {
         totalTimeLabel.setStyle(styleForLabels);
 
         createColumnsForTableView();
-        new FloydAlgorithmController().progressBarAnimation(dijkstraProgressBar);
+
+        floydAlgorithmController = new FloydAlgorithmController();
+        floydAlgorithmController.progressBarAnimation(dijkstraProgressBar);
     }
 
     private void createColumnsForTableView() {
@@ -109,14 +112,7 @@ public class OutputDijkstraController implements Initializable {
 
     @FXML
     private void saveDataToExcel() {
-        Stage stage = (Stage) dijkstraTableView.getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Сохранить данные в excel-файл");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel book (*.xls)", "*.xls"),
-                new FileChooser.ExtensionFilter("All Files (*.*)", "*.*")
-        );
-        File selectedFile = fileChooser.showSaveDialog(stage);
+        File selectedFile = floydAlgorithmController.choosePlaceToSaveExcelFile(dijkstraTableView);
         if (selectedFile != null) {
             Workbook book = new HSSFWorkbook();
             Sheet sheet = book.createSheet("Оптимальный путь");
@@ -127,19 +123,7 @@ public class OutputDijkstraController implements Initializable {
             createColumnsForExcelSheet(sheet);
 
             // Записываем всё в файл
-            try {
-                book.write(new FileOutputStream(selectedFile));
-                book.close();
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Данные сохранены");
-                alert.setHeaderText(null);
-                alert.setContentText("Файл сохранен в " + selectedFile.getPath());
-                alert.showAndWait();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            floydAlgorithmController.saveDataToExcelFile(selectedFile, book);
         }
     }
 

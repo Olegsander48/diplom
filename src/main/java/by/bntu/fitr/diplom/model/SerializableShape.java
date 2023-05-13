@@ -18,8 +18,8 @@ public class SerializableShape implements Serializable {
         this.shapeType = vertex.getShape().getTypeSelector();
         this.shapeFill = vertex.getShape().getFill().toString();
         this.shapeStroke = vertex.getShape().getStroke().toString();
-        this.shapeSideLength = vertex.getFontSize() / 2;
-        this.shapeStrokeWidth = vertex.getFontSize() / 5;
+        this.shapeSideLength = vertex.getFontSize() / 2.0;
+        this.shapeStrokeWidth = vertex.getFontSize() / 5.0;
         this.labelText = vertex.getLabel().getText();
         this.labelFontName = vertex.getLabel().getFont().getName();
         this.labelFontSize = vertex.getLabel().getFont().getSize();

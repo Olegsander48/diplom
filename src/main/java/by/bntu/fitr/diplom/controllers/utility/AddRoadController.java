@@ -72,21 +72,11 @@ public class AddRoadController extends Controller implements Initializable {
     private void setSpeedLimit(int roadClass, Label label) {
         String invariable = "Разрешенная скорость:";
         switch (roadClass) {
-            case 1:
-                invariable += " 120 км/ч";
-                break;
-            case 2:
-                invariable += " 90 км/ч";
-                break;
-            case 3:
-                invariable += " 80 км/ч";
-                break;
-            case 4:
-                invariable += " 60 км/ч";
-                break;
-            case 5:
-                invariable += " 40 км/ч";
-                break;
+            case 1 -> invariable += " 120 км/ч";
+            case 2 -> invariable += " 90 км/ч";
+            case 3 -> invariable += " 80 км/ч";
+            case 4 -> invariable += " 60 км/ч";
+            case 5 -> invariable += " 40 км/ч";
         }
         label.setText(invariable);
     }
@@ -148,8 +138,8 @@ public class AddRoadController extends Controller implements Initializable {
                 && !straightTextField.getText().isEmpty()
                 && straightTextField.getText().matches("\\d+")) {
 
-            Vertex startVertex = findElementInVertexes(startComboBox.getSelectionModel().getSelectedItem());
-            Vertex endVertex = findElementInVertexes(endComboBox.getSelectionModel().getSelectedItem());
+            Vertex startVertex = findElementInVertexes(startComboBox);
+            Vertex endVertex = findElementInVertexes(endComboBox);
 
             if (directionCheckBox.isSelected()) {
                 saveRoadToCollection(startVertex, endVertex, 10, 10, 10, 10, 20);
@@ -201,16 +191,16 @@ public class AddRoadController extends Controller implements Initializable {
         ));
     }
 
-    private Vertex findElementInVertexes(String title) {
+    public Vertex findElementInVertexes(ComboBox<String> comboBox) {
         return newMapController
                 .getVertexes()
                 .stream()
                 .filter(vertex -> vertex
                         .getLabel()
                         .getText()
-                        .equals(title))
+                        .equals(comboBox.getSelectionModel().getSelectedItem()))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     @Override

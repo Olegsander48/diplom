@@ -56,14 +56,7 @@ public class FloydAlgorithmController extends Controller implements Initializabl
 
     @FXML
     private void onSaveToExcelButtonClick() {
-        Stage stage = (Stage) firstTableView.getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Сохранить данные в excel-файл");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel book (*.xls)", "*.xls"),
-                new FileChooser.ExtensionFilter("All Files (*.*)", "*.*")
-        );
-        File selectedFile = fileChooser.showSaveDialog(stage);
+        File selectedFile = choosePlaceToSaveExcelFile(firstTableView);
         if (selectedFile != null) {
             Workbook book = new HSSFWorkbook();
             Sheet firstSheet = book.createSheet(firstTab.getText());
@@ -73,19 +66,7 @@ public class FloydAlgorithmController extends Controller implements Initializabl
             loadDataToCells(secondSheet, floydAlgorithm.getTransportNetworkModel(speedLimit));
 
             // Записываем всё в файл
-            try {
-                book.write(new FileOutputStream(selectedFile));
-                book.close();
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Данные сохранены");
-                alert.setHeaderText(null);
-                alert.setContentText("Файл сохранен в " + selectedFile.getPath());
-                alert.showAndWait();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            saveDataToExcelFile(selectedFile, book);
         }
     }
 
@@ -184,6 +165,33 @@ public class FloydAlgorithmController extends Controller implements Initializabl
             progressBar.setProgress(i);
         }
         progressBar.setStyle("-fx-accent: green");
+    }
+
+    public void saveDataToExcelFile (File file, Workbook workbook) {
+        try {
+            workbook.write(new FileOutputStream(file));
+            workbook.close();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Данные сохранены");
+            alert.setHeaderText(null);
+            alert.setContentText("Файл сохранен в " + file.getPath());
+            alert.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public File choosePlaceToSaveExcelFile(TableView<ObservableList<SimpleStringProperty>> tableView) {
+        Stage stage = (Stage) tableView.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Сохранить данные в excel-файл");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Excel book (*.xls)", "*.xls"),
+                new FileChooser.ExtensionFilter("All Files (*.*)", "*.*")
+        );
+        return fileChooser.showSaveDialog(stage);
     }
 
     @Override

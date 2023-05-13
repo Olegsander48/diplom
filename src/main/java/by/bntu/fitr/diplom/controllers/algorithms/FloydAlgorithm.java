@@ -5,9 +5,9 @@ import by.bntu.fitr.diplom.model.Vertex;
 import java.util.List;
 
 public class FloydAlgorithm {
-    private List<Vertex> vertexList;
-    private List<Road> roadList;
-    private double[][] arr;
+    private final List<Vertex> vertexList;
+    private final List<Road> roadList;
+    private final double[][] arr;
 
     public FloydAlgorithm(List<Vertex> vertexList, List<Road> roadList) {
         this.vertexList = vertexList;
@@ -15,8 +15,8 @@ public class FloydAlgorithm {
         arr = new double[vertexList.size()][vertexList.size()];
     }
 
-    private void calculateMatrixOfOptimalConnections(double plug, boolean speedLimit) {
-        calculateTransportNetworkModel(plug, speedLimit);
+    private void calculateMatrixOfOptimalConnections(boolean speedLimit) {
+        calculateTransportNetworkModel(Double.POSITIVE_INFINITY, speedLimit);
 
         for (int k = 0; k < vertexList.size(); k++) {
             for (int i = 0; i < arr.length; i++) {
@@ -54,7 +54,7 @@ public class FloydAlgorithm {
     }
 
     public double[][] getMatrixOfOptimalConnections(boolean speedLimit) {
-        calculateMatrixOfOptimalConnections(Double.POSITIVE_INFINITY, speedLimit);
+        calculateMatrixOfOptimalConnections(speedLimit);
         return arr;
     }
 

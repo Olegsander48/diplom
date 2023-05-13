@@ -34,8 +34,6 @@ public class AddVertexesController implements Initializable {
     private ColorPicker borderColorPicker, backgroundColorPicker;
     @FXML
     private BorderPane figureBorderPane;
-    @FXML
-    private Button suggestButton;
 
     private Boolean stateOfCityRadioBtn, stateOfRoadObjectRadioBtn;
     private Label vertexNameLabel;
@@ -69,7 +67,7 @@ public class AddVertexesController implements Initializable {
     }
 
     /**
-     * метод, отрисовывающий иконки создаваемых вершин в ImageView (окружность или треугольник с текстом)
+     * Метод, рисующий иконки создаваемых вершин в ImageView (окружность или треугольник с текстом)
      */
     @FXML
     private void onComboBoxSelected() {
@@ -123,8 +121,8 @@ public class AddVertexesController implements Initializable {
     @FXML
     private void onSuggestButtonClick() {
         vertex.setFontSize(fontSizesComboBox.getValue());
-        vertex.setMousePositionX(vertex.getMousePositionX() - (vertex.getFontSize() / 2));
-        vertex.setMousePositionY(vertex.getMousePositionY() - (vertex.getFontSize() / 2));
+        vertex.setMousePositionX(vertex.getMousePositionX() - (vertex.getFontSize() / 2.0));
+        vertex.setMousePositionY(vertex.getMousePositionY() - (vertex.getFontSize() / 2.0));
         if (vertexNameTextField.getText().equals("") && vertexNameLabel.getText().equals("\tName")) {
             String vertexName = stateOfCityRadioBtn ? "нп" : "до";
             vertex.getLabel().setText(vertexName + (newMapController.getVertexSize()));
@@ -143,7 +141,7 @@ public class AddVertexesController implements Initializable {
     }
 
     /**
-     * метод рассчитывает треугольник по заданным точкам центра и количеству вершин
+     * Метод рассчитывает треугольник по заданным точкам центра и количеству вершин
      */
     public static void setPolygonSides(Polygon polygon, double centerX, double centerY, double radius, int sides) {
         polygon.getPoints().clear();
@@ -158,28 +156,28 @@ public class AddVertexesController implements Initializable {
     }
 
     /**
-     * сеттер на получение состояние выбранностви cityRadioBtn (выбран ли нужный тип вершины)
+     * Сеттер на получение состояние выбранностви cityRadioBtn (выбран ли нужный тип вершины)
      */
     public void setStateOfCityRadioBtn(Boolean stateOfCityRadioBtn) {
         this.stateOfCityRadioBtn = stateOfCityRadioBtn;
     }
 
     /**
-     * сеттер на получение состояние выбранности roadObjectRadioBtn (выбран ли нужный тип вершины)
+     * Сеттер на получение состояние выбранности roadObjectRadioBtn (выбран ли нужный тип вершины)
      */
     public void setStateOfRoadObjectRadioBtn(Boolean stateOfRoadObjectRadioBtn) {
         this.stateOfRoadObjectRadioBtn = stateOfRoadObjectRadioBtn;
     }
 
-      /**
-     * сеттер на установку вершине значений позиций мыши по Х
+    /**
+     * Сеттер на установку вершине значений позиций мыши по Х
      */
     public void setValueOfMousePositionXCoordinate(double mousePositionX) {
         vertex.setMousePositionX(mousePositionX);
     }
 
     /**
-     * сеттер на установку вершине значений позиций мыши по У
+     * Сеттер на установку вершине значений позиций мыши по У
      */
     public void setValueOfMousePositionYCoordinate(double mousePositionY) {
         vertex.setMousePositionY(mousePositionY);
