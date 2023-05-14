@@ -1,26 +1,21 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
-import by.bntu.fitr.diplom.controllers.algorithms.FloydAlgorithm;
 import by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm.Graph;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -69,17 +64,21 @@ public class OutputDijkstraController implements Initializable {
     }
 
     private void createColumnsForTableView() {
-        TableColumn<ObservableList<SimpleStringProperty>, String> column1 = new TableColumn<>("N пп");
+/*        TableColumn<ObservableList<SimpleStringProperty>, String> column1 = new TableColumn<>("N пп");
         column1.setCellValueFactory(str -> str.getValue().get(0));
-        dijkstraTableView.getColumns().add(column1);
+        dijkstraTableView.getColumns().add(column1);*/
 
         TableColumn<ObservableList<SimpleStringProperty>, String> column2 = new TableColumn<>("Отправление");
-        column2.setCellValueFactory(str -> str.getValue().get(1));
+        column2.setCellValueFactory(str -> str.getValue().get(0));
         dijkstraTableView.getColumns().add(column2);
 
         TableColumn<ObservableList<SimpleStringProperty>, String> column3 = new TableColumn<>("Прибытие");
-        column3.setCellValueFactory(str -> str.getValue().get(2));
+        column3.setCellValueFactory(str -> str.getValue().get(1));
         dijkstraTableView.getColumns().add(column3);
+
+        TableColumn<ObservableList<SimpleStringProperty>, String> column6 = new TableColumn<>("Маршрут");
+        column6.setCellValueFactory(str -> str.getValue().get(2));
+        dijkstraTableView.getColumns().add(column6);
 
         TableColumn<ObservableList<SimpleStringProperty>, String> column4 = new TableColumn<>("Расстояние, км");
         column4.setCellValueFactory(str -> str.getValue().get(3));
@@ -93,14 +92,17 @@ public class OutputDijkstraController implements Initializable {
     private int createColumnsForExcelSheet(Sheet sheet) {
         Row row = sheet.createRow(0);
 
-        Cell number = row.createCell(0);
-        number.setCellValue("N пп");
+/*        Cell number = row.createCell(0);
+        number.setCellValue("N пп");*/
 
-        Cell departurePoint = row.createCell(1);
+        Cell departurePoint = row.createCell(0);
         departurePoint.setCellValue("Отправление");
 
-        Cell arrivalPoint = row.createCell(2);
+        Cell arrivalPoint = row.createCell(1);
         arrivalPoint.setCellValue("Прибытие");
+
+        Cell route = row.createCell(2);
+        route.setCellValue("Маршрут");
 
         Cell distance = row.createCell(3);
         distance.setCellValue("Расстояние, км");
@@ -158,9 +160,8 @@ public class OutputDijkstraController implements Initializable {
                             graph),
                     Integer.parseInt(road.getDistance()));
         }
-
-        System.out.println("Элементы имеют кратчайшие пути из точки A: ");
-        graph.path();
+        graph.path().forEach(System.out::println);
+        graph.path().forEach(this::loadDataToTable);
         graph.clean();
     }
 
@@ -171,6 +172,28 @@ public class OutputDijkstraController implements Initializable {
             }
         }
         return 0;
+    }
+
+    private String[] transformString(String str) {
+        String[] arr = str.split("\\s[-][>]\\s");
+        for (int i = 0; i < arr.length; i++) {
+            String forReplace =  arr[i].replaceAll("[(\\s)]", "");
+            arr[i] = forReplace.replaceAll("^\\d+", "");
+        }
+        return arr;
+    }
+
+    private void loadDataToTable(String lastString) {
+        String[] vertexes = transformString(lastString);
+
+        ObservableList<SimpleStringProperty> list = FXCollections.observableArrayList();
+        list.add(new SimpleStringProperty(vertexes[0]));
+        list.add(new SimpleStringProperty(vertexes[vertexes.length - 1]));
+        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+", "")));
+        list.add(new SimpleStringProperty(lastString.replaceAll("\\s.+", "")));
+        list.add(new SimpleStringProperty(String.valueOf(0)));
+
+        dijkstraTableView.getItems().add(list);
     }
 
     /*private void loadDataToCells(Sheet sheet, double[][] arr) {

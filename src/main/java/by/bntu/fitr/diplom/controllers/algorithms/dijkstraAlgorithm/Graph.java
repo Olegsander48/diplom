@@ -35,7 +35,7 @@ public class Graph {
         relationMatrix[start][end] = weight; // задание ребер между вершинами, с весом между ними
     }
 
-    public void path() { // выбор кратчайшего пути
+    public List<String> path() { // выбор кратчайшего пути
         //  задание данных для стартовой вершины
         int startTree = 0; // стартуем с вершины 0
         vertexList[startTree].setInTree(true); // включение в состав дерева первого элемента
@@ -66,7 +66,7 @@ public class Graph {
             updateShortestPaths(); // обновление списка кратчайших путей
         }
 
-        displayPaths(); // выводим в консоль результаты
+        return displayPaths(); // выводим в консоль результаты
     }
 
     public void clean() { // очиска дерева
@@ -115,24 +115,23 @@ public class Graph {
         }
     }
 
-    private void displayPaths() { // метод для вывода кратчайших путей на экран
+    private List<String> displayPaths() { // метод для вывода кратчайших путей на экран
+        List<String> routes = new ArrayList<>();
         for (int i = 0; i < countOfVertices; i++) {
-            System.out.print(vertexList[i].getLabel() + " = ");
+            String result = "";
             if (shortestPaths.get(i).getDistance() == INFINITY) {
-                System.out.println("0");
+                result += "0" + " (п1 -> п1)";
             } else {
-                String result = shortestPaths.get(i).getDistance() + " (";
+                result += shortestPaths.get(i).getDistance() + " (";
                 List<Integer> parents = shortestPaths.get(i).getParentVertices();
                 for (int j = 0; j < parents.size(); j++) {
                     result += vertexList[parents.get(j)].getLabel() + " -> ";
                 }
-                System.out.println(result + vertexList[i].getLabel() + ")");
+                result += vertexList[i].getLabel() + ")";
             }
+            routes.add(result);
         }
-    }
-
-    public Peak[] getVertexList() {
-        return vertexList;
+        return routes;
     }
 
     public int indexOfElement(String title) {
