@@ -2,6 +2,10 @@ package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
 import by.bntu.fitr.diplom.controllers.algorithms.FloydAlgorithm;
+import by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm.Graph;
+import by.bntu.fitr.diplom.model.Road;
+import by.bntu.fitr.diplom.model.Vertex;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class OutputDijkstraController implements Initializable {
@@ -36,6 +41,8 @@ public class OutputDijkstraController implements Initializable {
     private NewMapController newMapController;
     private String departurePoint, arrivalPoint;
     private FloydAlgorithmController floydAlgorithmController;
+    private List<Vertex> vertexList;
+    private List<Road> roadList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,6 +58,14 @@ public class OutputDijkstraController implements Initializable {
 
         floydAlgorithmController = new FloydAlgorithmController();
         floydAlgorithmController.progressBarAnimation(dijkstraProgressBar);
+
+        Platform.runLater(() -> {
+            vertexList = newMapController.getVertexes();
+            roadList = newMapController.getRoads();
+            calculateRoute();
+        });
+
+
     }
 
     private void createColumnsForTableView() {
@@ -125,6 +140,37 @@ public class OutputDijkstraController implements Initializable {
             // Записываем всё в файл
             floydAlgorithmController.saveDataToExcelFile(selectedFile, book);
         }
+    }
+
+    private void calculateRoute() {
+        Graph graph = new Graph();
+        for (Vertex vertex : vertexList) {
+            graph.addVertex(vertex.getLabel().getText());
+        }
+
+        for (Road road : roadList) {
+            graph.addEdge(
+                    indexOfElement(road.getStartPositionX(),
+                            road.getStartPositionY(),
+                            graph),
+                    indexOfElement(road.getEndPositionX(),
+                            road.getEndPositionY(),
+                            graph),
+                    Integer.parseInt(road.getDistance()));
+        }
+
+        System.out.println("Элементы имеют кратчайшие пути из точки A: ");
+        graph.path();
+        graph.clean();
+    }
+
+    private int indexOfElement(double positionX, double positionY, Graph graph) {
+        for (Vertex vertex : vertexList) {
+            if (vertex.getMousePositionX() == positionX && vertex.getMousePositionY() == positionY) {
+                return graph.indexOfElement(vertex.getLabel().getText());
+            }
+        }
+        return 0;
     }
 
     /*private void loadDataToCells(Sheet sheet, double[][] arr) {
