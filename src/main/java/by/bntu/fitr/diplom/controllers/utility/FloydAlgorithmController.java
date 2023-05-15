@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,23 +32,30 @@ public class FloydAlgorithmController extends Controller implements Initializabl
     private TableView<ObservableList<SimpleStringProperty>> firstTableView, secondTableView;
     @FXML
     private ProgressBar floydProgressBar;
+
     private NewMapController newMapController;
+    private OutputDijkstraController dijkstraController;
     private List<Vertex> vertexList;
     private List<Road> roadList;
     private FloydAlgorithm floydAlgorithm;
     private boolean speedLimit;
+    private List<String> tableColumns;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         firstTableView.setStyle("-fx-background-color: rgb(154, 181, 210)");
         secondTableView.setStyle("-fx-background-color: rgb(171, 171, 171)");
 
+        dijkstraController = new OutputDijkstraController();
+        tableColumns = new ArrayList<>(List.of("N пп", "Пункт отправления"));
+
         Platform.runLater(() -> {
             vertexList = newMapController.getVertexes();
             roadList = newMapController.getRoads();
             floydAlgorithm = new FloydAlgorithm(vertexList, roadList);
-            createColumnsForTable(firstTableView);
-            createColumnsForTable(secondTableView);
+            vertexList.stream().map(vertex -> vertex.getLabel().getText()).forEach(vertex -> tableColumns.add(vertex));
+            dijkstraController.createColumnsForTableView(firstTableView, tableColumns);
+            dijkstraController.createColumnsForTableView(secondTableView, tableColumns);
             updateTables();
         });
 
@@ -60,84 +68,16 @@ public class FloydAlgorithmController extends Controller implements Initializabl
         if (selectedFile != null) {
             Workbook book = new HSSFWorkbook();
             Sheet firstSheet = book.createSheet(firstTab.getText());
-            loadDataToCells(firstSheet, floydAlgorithm.getMatrixOfOptimalConnections(speedLimit));
-
             Sheet secondSheet = book.createSheet(secondTab.getText().substring(0, 24));
-            loadDataToCells(secondSheet, floydAlgorithm.getTransportNetworkModel(speedLimit));
+
+            dijkstraController.createColumnsForExcelSheet(firstSheet, tableColumns);
+            dijkstraController.createColumnsForExcelSheet(secondSheet, tableColumns);
+
+            dijkstraController.loadDataToCells(firstSheet, firstTableView);
+            dijkstraController.loadDataToCells(secondSheet, secondTableView);
 
             // Записываем всё в файл
             saveDataToExcelFile(selectedFile, book);
-        }
-    }
-
-    private void loadDataToCells(Sheet sheet, double[][] arr) {
-        int count = 1;
-        createColumnsForExcelSheet(sheet);
-
-        for (int i = 0; i < vertexList.size(); i++) {
-            // Нумерация начинается с нуля
-            Row row = sheet.createRow(i + 1);
-
-            Cell number = row.createCell(0);
-            number.setCellValue(count++);
-
-            Cell vertexName = row.createCell(1);
-            vertexName.setCellValue(vertexList.get(i).getLabel().getText());
-
-            for (int j = 0; j < vertexList.size(); j++) {
-                int index = j + 2;
-                Cell distance = row.createCell(index);
-
-                CellStyle cellStyle = distance.getCellStyle();
-                cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-                distance.setCellStyle(cellStyle);
-
-                double value = arr[i][j];
-                if (value == Double.POSITIVE_INFINITY) {
-                    distance.setCellValue("∞");
-                } else {
-                    distance.setCellValue(String.format("%.2f", value));
-                }
-            }
-        }
-    }
-
-    private void createColumnsForExcelSheet(Sheet sheet) {
-        Row row = sheet.createRow(0);
-
-        Cell number = row.createCell(0);
-        number.setCellValue("N пп");
-
-        Cell vertexName = row.createCell(1);
-        vertexName.setCellValue("Пункт отправления");
-
-        for (int j = 0; j < vertexList.size(); j++) {
-            int index = j + 2;
-            Cell distance = row.createCell(index);
-
-            CellStyle cellStyle = distance.getCellStyle();
-            cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            distance.setCellStyle(cellStyle);
-
-            distance.setCellValue(vertexList.get(j).getLabel().getText());
-        }
-    }
-
-    private void createColumnsForTable(TableView<ObservableList<SimpleStringProperty>> tableView) {
-        TableColumn<ObservableList<SimpleStringProperty>, String> column1 = new TableColumn<>("N пп");
-        column1.setCellValueFactory(str -> str.getValue().get(0));
-        tableView.getColumns().add(column1);
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column2 = new TableColumn<>("Пункт отправления");
-        column2.setCellValueFactory(str -> str.getValue().get(1));
-        tableView.getColumns().add(column2);
-
-        for (int i = 0; i < vertexList.size(); i++) {
-            int index = i + 2;
-            TableColumn<ObservableList<SimpleStringProperty>, String> column
-                    = new TableColumn<>(vertexList.get(i).getLabel().getText());
-            column.setCellValueFactory(str -> str.getValue().get(index));
-            tableView.getColumns().add(column);
         }
     }
 

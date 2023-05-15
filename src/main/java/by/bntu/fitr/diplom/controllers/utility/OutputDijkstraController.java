@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,12 +33,12 @@ public class OutputDijkstraController implements Initializable {
     @FXML
     private ProgressBar dijkstraProgressBar;
 
-
     private NewMapController newMapController;
     private String departurePoint, arrivalPoint;
     private FloydAlgorithmController floydAlgorithmController;
     private List<Vertex> vertexList;
     private List<Road> roadList;
+    private List<String> tableColumns;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,68 +50,35 @@ public class OutputDijkstraController implements Initializable {
         totalDistanceLabel.setStyle(styleForLabels);
         totalTimeLabel.setStyle(styleForLabels);
 
-        createColumnsForTableView();
-
         floydAlgorithmController = new FloydAlgorithmController();
         floydAlgorithmController.progressBarAnimation(dijkstraProgressBar);
+
+        tableColumns = List.of("Отправление", "Прибытие", "Маршрут", "Расстояние, км", "Время движения, ч");
+        createColumnsForTableView(dijkstraTableView, tableColumns);
 
         Platform.runLater(() -> {
             vertexList = newMapController.getVertexes();
             roadList = newMapController.getRoads();
             calculateRoute();
         });
-
-
     }
 
-    private void createColumnsForTableView() {
-/*        TableColumn<ObservableList<SimpleStringProperty>, String> column1 = new TableColumn<>("N пп");
-        column1.setCellValueFactory(str -> str.getValue().get(0));
-        dijkstraTableView.getColumns().add(column1);*/
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column2 = new TableColumn<>("Отправление");
-        column2.setCellValueFactory(str -> str.getValue().get(0));
-        dijkstraTableView.getColumns().add(column2);
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column3 = new TableColumn<>("Прибытие");
-        column3.setCellValueFactory(str -> str.getValue().get(1));
-        dijkstraTableView.getColumns().add(column3);
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column6 = new TableColumn<>("Маршрут");
-        column6.setCellValueFactory(str -> str.getValue().get(2));
-        dijkstraTableView.getColumns().add(column6);
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column4 = new TableColumn<>("Расстояние, км");
-        column4.setCellValueFactory(str -> str.getValue().get(3));
-        dijkstraTableView.getColumns().add(column4);
-
-        TableColumn<ObservableList<SimpleStringProperty>, String> column5 = new TableColumn<>("Время движения, ч");
-        column5.setCellValueFactory(str -> str.getValue().get(4));
-        dijkstraTableView.getColumns().add(column5);
+    public void createColumnsForTableView(TableView<ObservableList<SimpleStringProperty>> tableView, List<String> tableColumns) {
+        for (int i = 0; i < tableColumns.size(); i++) {
+            int index = i;
+            TableColumn<ObservableList<SimpleStringProperty>, String> column = new TableColumn<>(tableColumns.get(i));
+            column.setCellValueFactory(str -> str.getValue().get(index));
+            tableView.getColumns().add(column);
+        }
     }
 
-    private int createColumnsForExcelSheet(Sheet sheet) {
+    public void createColumnsForExcelSheet(Sheet sheet, List<String> tableColumns) {
         Row row = sheet.createRow(0);
 
-/*        Cell number = row.createCell(0);
-        number.setCellValue("N пп");*/
-
-        Cell departurePoint = row.createCell(0);
-        departurePoint.setCellValue("Отправление");
-
-        Cell arrivalPoint = row.createCell(1);
-        arrivalPoint.setCellValue("Прибытие");
-
-        Cell route = row.createCell(2);
-        route.setCellValue("Маршрут");
-
-        Cell distance = row.createCell(3);
-        distance.setCellValue("Расстояние, км");
-
-        Cell time = row.createCell(4);
-        time.setCellValue("Время движения, ч");
-
-        return row.getPhysicalNumberOfCells();
+        for (int i = 0; i < tableColumns.size(); i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(tableColumns.get(i));
+        }
     }
 
     public void setDeparturePoint(String selectedItem) {
@@ -134,10 +102,8 @@ public class OutputDijkstraController implements Initializable {
             Workbook book = new HSSFWorkbook();
             Sheet sheet = book.createSheet("Оптимальный путь");
 
-            //todo тут либо будет загрузка данных через коллекцию или через массив
-            //todo может нет смысла оставлять отдельный метод и всю логику перенести сюда?
-            //loadDataToCells(sheet, floydAlgorithm.getMatrixOfOptimalConnections());
-            createColumnsForExcelSheet(sheet);
+            createColumnsForExcelSheet(sheet, tableColumns);
+            loadDataToCells(sheet, dijkstraTableView);
 
             // Записываем всё в файл
             floydAlgorithmController.saveDataToExcelFile(selectedFile, book);
@@ -196,35 +162,16 @@ public class OutputDijkstraController implements Initializable {
         dijkstraTableView.getItems().add(list);
     }
 
-    /*private void loadDataToCells(Sheet sheet, double[][] arr) {
+    public void loadDataToCells(Sheet sheet, TableView<ObservableList<SimpleStringProperty>> tableView) {
         int count = 1;
-        createColumnsForExcelSheet(sheet);
 
-        for (int i = 0; i < vertexList.size(); i++) {
-            // Нумерация начинается с нуля
-            Row row = sheet.createRow(i + 1);
+        for (ObservableList<SimpleStringProperty> observableList : tableView.getItems()) {
+            Row row = sheet.createRow(count++);
 
-            Cell number = row.createCell(0);
-            number.setCellValue(count++);
-
-            Cell vertexName = row.createCell(1);
-            vertexName.setCellValue(vertexList.get(i).getLabel().getText());
-
-            for (int j = 0; j < vertexList.size(); j++) {
-                int index = j + 2;
-                Cell distance = row.createCell(index);
-
-                CellStyle cellStyle = distance.getCellStyle();
-                cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-                distance.setCellStyle(cellStyle);
-
-                double value = arr[i][j];
-                if (value == Double.POSITIVE_INFINITY) {
-                    distance.setCellValue("∞");
-                } else {
-                    distance.setCellValue(String.format("%.2f", value));
-                }
+            for (int i = 0; i < observableList.size(); i++) {
+                Cell number = row.createCell(i);
+                number.setCellValue(observableList.get(i).getValue());
             }
         }
-    }*/
+    }
 }
