@@ -8,15 +8,18 @@ public class Graph {
     private final int INFINITY = 100000000; // это число у нас будет служить в качестве "бесконечности"
     private Peak vertexList[]; // список вершин
     private int relationMatrix[][]; // матрица связей вершин
+    private double speedLimitMatrix[][]; //матрица ограничений скорости на участках дороги
     private int countOfVertices; // текущее количество вершин
     private int countOfVertexInTree; // количество рассмотренных вершин в дереве
     private List<Path> shortestPaths; // список данных кратчайших путей
     private int currentVertex; // текущая вершина
     private int startToCurrent; //расстояние до currentVertex
+    private double startToCurrentSpeedLimit; //ограничение скорости до currentVertex
 
     public Graph() {
         vertexList = new Peak[MAX_VERTS]; // матрица смежности
         relationMatrix = new int[MAX_VERTS][MAX_VERTS];
+        speedLimitMatrix = new double[MAX_VERTS][MAX_VERTS];
         countOfVertices = 0;
         countOfVertexInTree = 0;
         for (int i = 0; i < MAX_VERTS; i++) {// матрица смежности заполняется
@@ -31,8 +34,9 @@ public class Graph {
         vertexList[countOfVertices++] = new Peak(lab);
     }
 
-    public void addEdge(int start, int end, int weight) {
+    public void addEdge(int start, int end, int weight, double speed) {
         relationMatrix[start][end] = weight; // задание ребер между вершинами, с весом между ними
+        speedLimitMatrix[start][end] = speed; // задание ограничения скорости между точками
     }
 
     public List<String> path() { // выбор кратчайшего пути
@@ -41,10 +45,10 @@ public class Graph {
         vertexList[startTree].setInTree(true); // включение в состав дерева первого элемента
         countOfVertexInTree = 1;
 
-        // заполнение коротких путей для вершин смежных с стартовой
+        // заполнение коротких путей для вершин смежных со стартовой
         for (int i = 0; i < countOfVertices; i++) {
             int tempDist = relationMatrix[startTree][i];
-            Path path = new Path(tempDist);
+            Path path = new Path(tempDist, speedLimitMatrix[startTree][i]);
             path.getParentVertices().add(0);// первым родительским элементом, будет всегда стартовая вершина
             shortestPaths.add(path);
         }
@@ -59,6 +63,7 @@ public class Graph {
             } else {
                 currentVertex = indexMin; // переводим указатель currentVert к текущей вершине
                 startToCurrent = shortestPaths.get(indexMin).getDistance();// задаем дистанцию к текущей вершине
+                startToCurrentSpeedLimit = shortestPaths.get(indexMin).getSpeedLimit();
             }
 
             vertexList[currentVertex].setInTree(true);  //включение текущей вершины в дерево
@@ -104,12 +109,20 @@ public class Graph {
             // определение расстояния текущего элемента vertexIndex
             int shortPathDistance = shortestPaths.get(vertexIndex).getDistance();
 
+            // вычисление скорости для одного элемента sPath
+            // получение скорости от currentVert к column
+            double currentToFringeSpeed = speedLimitMatrix[currentVertex][vertexIndex];
+            // суммирование всех скоростей и нахождение среднего значения
+            double startToFringeSpeed = (startToCurrentSpeedLimit + currentToFringeSpeed) / 2;
+
             // сравнение расстояния через currentVertex с текущим расстоянием в вершине с индексом vertexIndex
             if (startToFringe < shortPathDistance) {// если меньше, то у вершины под индексом vertexIndex будет задан новый кратчайший путь
                 List<Integer> newParents = new ArrayList<>(shortestPaths.get(currentVertex).getParentVertices());//создаём копию списка родителей вершины currentVert
                 newParents.add(currentVertex);// задаём в него и currentVertex как предыдущий
                 shortestPaths.get(vertexIndex).setParentVertices(newParents); // соохраняем новый маршут
                 shortestPaths.get(vertexIndex).setDistance(startToFringe); // соохраняем новую дистанцию
+                shortestPaths.get(vertexIndex).setSpeedLimit(startToFringeSpeed); // соохраняем новое ограничение по скорости
+                shortestPaths.get(vertexIndex).setTransitTime(startToFringe); // соохраняем новый показатель времени перемещения
             }
             vertexIndex++;
         }
@@ -120,15 +133,17 @@ public class Graph {
         for (int i = 0; i < countOfVertices; i++) {
             String result = "";
             if (shortestPaths.get(i).getDistance() == INFINITY) {
-                result += "0" + " (п1 -> п1)";
+                result += "0 0.0" + " (";
             } else {
-                result += shortestPaths.get(i).getDistance() + " (";
-                List<Integer> parents = shortestPaths.get(i).getParentVertices();
-                for (int j = 0; j < parents.size(); j++) {
-                    result += vertexList[parents.get(j)].getLabel() + " -> ";
-                }
-                result += vertexList[i].getLabel() + ")";
+                result += shortestPaths.get(i).getDistance() + " " + shortestPaths.get(i).getTransitTime() + " (";
             }
+
+            List<Integer> parents = shortestPaths.get(i).getParentVertices();
+            for (int j = 0; j < parents.size(); j++) {
+                result += vertexList[parents.get(j)].getLabel() + " -> ";
+            }
+            result += vertexList[i].getLabel() + ")";
+
             routes.add(result);
         }
         return routes;

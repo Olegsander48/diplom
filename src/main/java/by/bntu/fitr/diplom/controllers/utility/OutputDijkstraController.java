@@ -124,7 +124,9 @@ public class OutputDijkstraController implements Initializable {
                     indexOfElement(road.getEndPositionX(),
                             road.getEndPositionY(),
                             graph),
-                    Integer.parseInt(road.getDistance()));
+                    Integer.parseInt(road.getDistance()),
+                    road.getSpeed());
+
         }
         graph.path().forEach(System.out::println);
         graph.path().forEach(this::loadDataToTable);
@@ -144,7 +146,7 @@ public class OutputDijkstraController implements Initializable {
         String[] arr = str.split("\\s[-][>]\\s");
         for (int i = 0; i < arr.length; i++) {
             String forReplace =  arr[i].replaceAll("[(\\s)]", "");
-            arr[i] = forReplace.replaceAll("^\\d+", "");
+            arr[i] = forReplace.replaceAll("^\\d+.\\d+", "");
         }
         return arr;
     }
@@ -155,10 +157,10 @@ public class OutputDijkstraController implements Initializable {
         ObservableList<SimpleStringProperty> list = FXCollections.observableArrayList();
         list.add(new SimpleStringProperty(vertexes[0]));
         list.add(new SimpleStringProperty(vertexes[vertexes.length - 1]));
-        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+", "")));
+        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s\\d+.\\d+.", "")));
         list.add(new SimpleStringProperty(lastString.replaceAll("\\s.+", "")));
-        list.add(new SimpleStringProperty(String.valueOf(0)));
-
+        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s", "")
+                                                    .replaceAll("\\s.+", "")));
         dijkstraTableView.getItems().add(list);
     }
 
