@@ -45,9 +45,6 @@ public class DeleteVertexController extends Controller implements Initializable 
             newMapController.setRoads(checkRoadsForContact(removedVertex));
             newMapController.drawFigures();
 
-            newMapController.getVertexes().forEach(System.out::println);
-            newMapController.getRoads().forEach(System.out::println);
-
             newMapController.setCountOfRoads();
 
             Stage stage = (Stage) vertexesComboBox.getScene().getWindow();

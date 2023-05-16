@@ -77,7 +77,7 @@ public class NewMapController implements Initializable {
     private double mousePositionX, mousePositionY; //изначальные координаты мыши при нажатии
     private double scalesStep;
     private ToggleGroup parametersRadioPane;
-    private int vertexSize = 1;
+    private int vertexSize = 1; //данная переменная нужна чтоб при удалении вершины не сбивалась нумерация
 
 
     @Override
@@ -455,7 +455,7 @@ public class NewMapController implements Initializable {
         roadsCountLabel.setText(String.valueOf(roads.size()));
     }
 
-    public int getVertexSize() { //todo данный метод вызывает сомнения в его необходимости
+    public int getVertexSize() {
         return vertexSize;
     }
 

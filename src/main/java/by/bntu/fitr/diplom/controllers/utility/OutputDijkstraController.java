@@ -111,7 +111,8 @@ public class OutputDijkstraController implements Initializable {
     }
 
     private void calculateRoute() {
-        Graph graph = new Graph();
+        Graph graph = new Graph(newMapController);
+
         for (Vertex vertex : vertexList) {
             graph.addVertex(vertex.getLabel().getText());
         }
@@ -128,7 +129,8 @@ public class OutputDijkstraController implements Initializable {
                     road.getSpeed());
 
         }
-        graph.path().forEach(System.out::println);
+
+        graph.path().forEach(System.out::println); //todo убрать вывод значений из коллекции
         graph.path().forEach(this::loadDataToTable);
         graph.clean();
     }
@@ -162,6 +164,10 @@ public class OutputDijkstraController implements Initializable {
         list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s", "")
                                                     .replaceAll("\\s.+", "")));
         dijkstraTableView.getItems().add(list);
+        totalCostsLabel.setText("");
+        totalDistanceLabel.setText("distance");
+        totalTimeLabel.setText("time");
+
     }
 
     public void loadDataToCells(Sheet sheet, TableView<ObservableList<SimpleStringProperty>> tableView) {

@@ -1,10 +1,12 @@
 package by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm;
 
+import by.bntu.fitr.diplom.controllers.NewMapController;
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private final int MAX_VERTS = 10;// максимальное количество вершин
     private final int INFINITY = 100000000; // это число у нас будет служить в качестве "бесконечности"
     private Peak vertexList[]; // список вершин
     private int relationMatrix[][]; // матрица связей вершин
@@ -16,7 +18,9 @@ public class Graph {
     private int startToCurrent; //расстояние до currentVertex
     private double startToCurrentSpeedLimit; //ограничение скорости до currentVertex
 
-    public Graph() {
+    public Graph(NewMapController newMapController) {
+        final int MAX_VERTS = newMapController.getVertexes().size();// максимальное количество вершин
+
         vertexList = new Peak[MAX_VERTS]; // матрица смежности
         relationMatrix = new int[MAX_VERTS][MAX_VERTS];
         speedLimitMatrix = new double[MAX_VERTS][MAX_VERTS];

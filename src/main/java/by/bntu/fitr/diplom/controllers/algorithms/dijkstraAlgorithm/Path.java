@@ -38,7 +38,6 @@ public class Path { // объект данного класса содержащ
 
     public void setTransitTime(double distance) {
         this.transitTime = distance / speedLimit;
-        System.out.println("Speed limit = " + speedLimit);
     }
 
     public double getSpeedLimit() {
