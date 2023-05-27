@@ -31,6 +31,7 @@ public class DeleteRoadController extends Controller implements Initializable {
 
     private NewMapController newMapController;
     private List<String> elements;
+    private AddRoadController addRoadController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,6 +57,7 @@ public class DeleteRoadController extends Controller implements Initializable {
 
         Platform.runLater(() -> {
             elements = newMapController.getLabelTitles();
+            addRoadController = new AddRoadController(newMapController);
             loadElementsToComboBox();
         });
 
@@ -112,7 +114,7 @@ public class DeleteRoadController extends Controller implements Initializable {
     }
 
     private Vertex findElementInVertexes(ComboBox<String> comboBox) {
-        return new AddRoadController().findElementInVertexes(comboBox);
+        return addRoadController.findElementInVertexes(comboBox);
     }
 
     @FXML
@@ -125,8 +127,7 @@ public class DeleteRoadController extends Controller implements Initializable {
     }
 
     private void onComboBoxSelected(ComboBox<String> first, ComboBox<String> second, Label label) {
-        AddRoadController controller = new AddRoadController();
-        controller.onComboBoxSelected(first, second, label, elements);
+        addRoadController.onComboBoxSelected(first, second, label, elements);
     }
 
     @FXML

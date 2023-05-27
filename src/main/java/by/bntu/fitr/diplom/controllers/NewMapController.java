@@ -42,7 +42,7 @@ import java.util.function.Predicate;
  * */
 public class NewMapController implements Initializable {
     @FXML
-    private Button blockMapBtn, addConnectionBtn, deleteConnectionBtn, deleteVertexBtn, addSubstrateBtn;
+    private Button blockMapBtn, addConnectionBtn, deleteConnectionBtn, deleteVertexBtn, addSubstrateBtn, findInInternetBtn;
     @FXML
     private TitledPane substratePane, internetPane, vertexPane, connectionPane, parametersPane, algorithmsPane;
     @FXML
@@ -98,6 +98,7 @@ public class NewMapController implements Initializable {
         deleteRadioBtn.setOnAction(actionEvent -> addSubstrateBtn.setText(deleteRadioBtn.getText()));
 
         internetPane.setCollapsible(false);
+        findInInternetBtn.setDisable(true);
         searchersComboBox.setItems(FXCollections.observableArrayList("google.com", "yandex.com"));
 
         vertexPane.setCollapsible(false);
@@ -221,7 +222,7 @@ public class NewMapController implements Initializable {
     }
 
     /**
-     * метод, срабатывающий при нажатии на крестик окна с основной картой
+     * Метод, срабатывающий при нажатии на крестик окна с основной картой
      */
     public void onCloseWindowAction(String stageTitle) {
         loadNewWindow("views/utility/save-map-view.fxml",
@@ -362,7 +363,7 @@ public class NewMapController implements Initializable {
             line.setStrokeWidth(road.getStrokeWidth());
             group.getChildren().add(line);
 
-            Label label = new Label(road.getDistance());
+            Label label = new Label(String.valueOf(road.getDistance()));
             label.setStyle("-fx-text-fill: rgb(241,134,0);" + "-fx-font-weight: bold");
             label.setFont(new Font("System", 15));
             label.setLayoutX(Math.abs(line.getEndX() + line.getStartX()) / 2 + road.getLabelOffset());

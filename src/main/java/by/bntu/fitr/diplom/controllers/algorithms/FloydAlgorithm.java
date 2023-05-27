@@ -46,7 +46,7 @@ public class FloydAlgorithm {
                     && startVertex.getMousePositionY() == road.getStartPositionY()
                     && endVertex.getMousePositionX() == road.getEndPositionX()
                     && endVertex.getMousePositionY() == road.getEndPositionY()) {
-                double value = Double.parseDouble(road.getDistance());
+                double value = road.getDistance();
                 result = speedLimit ? value / road.getSpeed() : value;
             }
         }

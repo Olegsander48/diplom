@@ -5,8 +5,9 @@ import javafx.scene.control.Label;
 import java.io.Serializable;
 
 public class Road implements Serializable {
-    private String distance;
+    private double distance;
     private double speed;
+    private int roadClass;
 
     private double startPositionX;
     private double startPositionY;
@@ -26,9 +27,10 @@ public class Road implements Serializable {
 
     private int labelOffset;
 
-    public Road(String distance, double speed, double startPositionX, double startPositionY, double endPositionX, double endPositionY, int strokeWidth, double scaleStep, int startXOffset, int startYOffset, int endXOffset, int endYOffset, int labelOffset) {
+    public Road(double distance, double speed, int roadClass, double startPositionX, double startPositionY, double endPositionX, double endPositionY, int strokeWidth, double scaleStep, int startXOffset, int startYOffset, int endXOffset, int endYOffset, int labelOffset) {
         this.distance = distance;
         this.speed = speed;
+        this.roadClass = roadClass;
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
         this.endPositionX = endPositionX;
@@ -45,11 +47,11 @@ public class Road implements Serializable {
         this.labelOffset = labelOffset;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -173,11 +175,20 @@ public class Road implements Serializable {
         this.speed = speed;
     }
 
+    public int getRoadClass() {
+        return roadClass;
+    }
+
+    public void setRoadClass(int roadClass) {
+        this.roadClass = roadClass;
+    }
+
     @Override
     public String toString() {
         return "Road{" +
-                "distance='" + distance + '\'' +
+                "distance=" + distance +
                 ", speed=" + speed +
+                ", roadClass=" + roadClass +
                 ", startPositionX=" + startPositionX +
                 ", startPositionY=" + startPositionY +
                 ", endPositionX=" + endPositionX +

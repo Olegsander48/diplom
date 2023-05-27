@@ -125,7 +125,7 @@ public class OutputDijkstraController implements Initializable {
                     indexOfElement(road.getEndPositionX(),
                             road.getEndPositionY(),
                             graph),
-                    Integer.parseInt(road.getDistance()),
+                    (int) road.getDistance(),
                     road.getSpeed());
 
         }
