@@ -1,7 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
-import by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm.Graph;
+import by.bntu.fitr.diplom.algorithms.dijkstraAlgorithm.Graph;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -17,7 +17,6 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -164,9 +163,11 @@ public class OutputDijkstraController implements Initializable {
         list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s", "")
                                                     .replaceAll("\\s.+", "")));
         dijkstraTableView.getItems().add(list);
-        totalCostsLabel.setText("");
-        totalDistanceLabel.setText("distance");
-        totalTimeLabel.setText("time");
+        totalCostsLabel.setText("0");
+
+        totalDistanceLabel.setText(lastString.replaceAll("\\s.+", "") + " км");
+        totalTimeLabel.setText(String.format("%.4f",Double.parseDouble(lastString.replaceAll("^\\d+\\s", "")
+                .replaceAll("\\s.+", ""))) + " ч");
 
     }
 

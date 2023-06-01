@@ -1,4 +1,4 @@
-package by.bntu.fitr.diplom.controllers.algorithms;
+package by.bntu.fitr.diplom.algorithms;
 
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;

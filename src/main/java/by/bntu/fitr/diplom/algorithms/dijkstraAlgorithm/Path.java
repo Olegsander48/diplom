@@ -1,4 +1,4 @@
-package by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm;
+package by.bntu.fitr.diplom.algorithms.dijkstraAlgorithm;
 
 import java.util.ArrayList;
 import java.util.List;

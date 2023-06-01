@@ -1,7 +1,6 @@
-package by.bntu.fitr.diplom.controllers.algorithms.dijkstraAlgorithm;
+package by.bntu.fitr.diplom.algorithms.dijkstraAlgorithm;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +90,7 @@ public class Graph {
         for (int i = 1; i < countOfVertices; i++) {// для каждой вершины
             if (!vertexList[i].isInTree() && shortestPaths.get(i).getDistance() < minDist) { // если вершина ещё не ве дереве и её растояние меньше старого минимума
                 minDist = shortestPaths.get(i).getDistance(); // задаётся новый минимум
-                indexMin = i; // обновление индекса вершины содержащую минимаьную дистанцию
+                indexMin = i; // обновление индекса вершины содержащую минимальную дистанцию
             }
         }
         return indexMin; //возвращает индекс вершины с наименшей дистанцией, из вершин еще не входящих в дерево

@@ -1,7 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
 import by.bntu.fitr.diplom.controllers.NewMapController;
-import by.bntu.fitr.diplom.controllers.algorithms.FloydAlgorithm;
+import by.bntu.fitr.diplom.algorithms.FloydAlgorithm;
 import by.bntu.fitr.diplom.model.Controller;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
@@ -12,12 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.*;
 import java.net.URL;

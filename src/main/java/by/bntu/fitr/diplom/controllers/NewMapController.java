@@ -198,7 +198,7 @@ public class NewMapController implements Initializable {
     }
 
     /**
-     * метод изменения масштаба изображения путем изменнеия выбранного значения в комбобоксе
+     * метод изменения масштаба изображения путем изменения выбранного значения в комбобоксе
      */
     @FXML
     private void onScalesComboBoxChanged() {
@@ -471,14 +471,7 @@ public class NewMapController implements Initializable {
 
     @FXML
     private void onFloydAlgorithmButtonClick() {
-        loadNewWindow("views/utility/floyd-algorithm-view.fxml",
-                "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
-                "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
-                Modality.WINDOW_MODAL,
-                0);
-
-        //todo расскоментировать по завершению работы над алгоритмом флойда
-        /*if (vertexes.size() >= 2 && roads.size() != 0) {
+        if (vertexes.size() >= 2 && roads.size() != 0) {
             loadNewWindow("views/utility/floyd-algorithm-view.fxml",
                     "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
                     "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
@@ -491,7 +484,7 @@ public class NewMapController implements Initializable {
             alert.setContentText("Создайте транспортную сеть!");
 
             alert.showAndWait();
-        }*/
+        }
     }
 
     @FXML
@@ -501,11 +494,12 @@ public class NewMapController implements Initializable {
                 "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
                 Modality.APPLICATION_MODAL,
                 0);
+
     }
 
     @FXML
     private void onReRouteButtonClick() {
-        saveDataToFile(); //todo убрать вызов метода
+
     }
 
     public void saveDataToFile() {

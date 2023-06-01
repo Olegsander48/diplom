@@ -144,7 +144,7 @@
                </image>
             </ImageView>
             <Separator orientation="VERTICAL" prefHeight="18.0" />
-            <ImageView fx:id="saveMapStateBarImage" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="saveMapStateBarImage" fitHeight="18.0" fitWidth="18.0" onMouseClicked="#saveDataToFile" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ci49дискета.png" />
                </image>
