@@ -1,7 +1,7 @@
 package by.bntu.fitr.diplom.controllers.utility;
 
+import by.bntu.fitr.diplom.algorithms.DijkstraAlgorithm;
 import by.bntu.fitr.diplom.controllers.NewMapController;
-import by.bntu.fitr.diplom.algorithms.dijkstraAlgorithm.Graph;
 import by.bntu.fitr.diplom.model.Road;
 import by.bntu.fitr.diplom.model.Vertex;
 import javafx.application.Platform;
@@ -18,7 +18,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class OutputDijkstraController implements Initializable {
     @FXML
@@ -52,7 +54,7 @@ public class OutputDijkstraController implements Initializable {
         floydAlgorithmController = new FloydAlgorithmController();
         floydAlgorithmController.progressBarAnimation(dijkstraProgressBar);
 
-        tableColumns = List.of("Отправление", "Прибытие", "Маршрут", "Расстояние, км", "Время движения, ч");
+        tableColumns = List.of("№ пп", "Отправление", "Прибытие", "Расстояние, км", "Время движения, ч");
         createColumnsForTableView(dijkstraTableView, tableColumns);
 
         Platform.runLater(() -> {
@@ -80,20 +82,6 @@ public class OutputDijkstraController implements Initializable {
         }
     }
 
-    public void setDeparturePoint(String selectedItem) {
-        departurePoint = selectedItem;
-        beginnigRouteLabel.setText(departurePoint);
-    }
-
-    public void setArrivalPoint(String selectedItem) {
-        arrivalPoint = selectedItem;
-        endRouteLabel.setText(arrivalPoint);
-    }
-
-    public void setNewMapController(NewMapController newMapController) {
-        this.newMapController = newMapController;
-    }
-
     @FXML
     private void saveDataToExcel() {
         File selectedFile = floydAlgorithmController.choosePlaceToSaveExcelFile(dijkstraTableView);
@@ -110,64 +98,31 @@ public class OutputDijkstraController implements Initializable {
     }
 
     private void calculateRoute() {
-        Graph graph = new Graph(newMapController);
+        DijkstraAlgorithm algorithm = new DijkstraAlgorithm(vertexList, roadList);
+        loadDataToTable(
+                algorithm.getMapOfDistances(departurePoint, arrivalPoint),
+                algorithm.getMapOfTimes(departurePoint, arrivalPoint));
 
-        for (Vertex vertex : vertexList) {
-            graph.addVertex(vertex.getLabel().getText());
-        }
-
-        for (Road road : roadList) {
-            graph.addEdge(
-                    indexOfElement(road.getStartPositionX(),
-                            road.getStartPositionY(),
-                            graph),
-                    indexOfElement(road.getEndPositionX(),
-                            road.getEndPositionY(),
-                            graph),
-                    (int) road.getDistance(),
-                    road.getSpeed());
-
-        }
-
-        graph.path().forEach(System.out::println); //todo убрать вывод значений из коллекции
-        graph.path().forEach(this::loadDataToTable);
-        graph.clean();
     }
 
-    private int indexOfElement(double positionX, double positionY, Graph graph) {
-        for (Vertex vertex : vertexList) {
-            if (vertex.getMousePositionX() == positionX && vertex.getMousePositionY() == positionY) {
-                return graph.indexOfElement(vertex.getLabel().getText());
-            }
+    private void loadDataToTable(Map<String, Double> mapOfDistances, Map<String, Double> mapOfTimes) {
+        List<Double> distances = mapOfDistances.values().stream().toList();
+        List<String> vertexes = mapOfDistances.keySet().stream().toList();
+        List<Double> times = mapOfTimes.values().stream().toList();
+
+        for (int i = 1; i < vertexes.size(); i++) {
+            ObservableList<SimpleStringProperty> list = FXCollections.observableArrayList();
+            list.add(new SimpleStringProperty(String.valueOf(i)));
+            list.add(new SimpleStringProperty(String.valueOf(vertexes.get(i - 1))));
+            list.add(new SimpleStringProperty(String.valueOf(vertexes.get(i))));
+            list.add(new SimpleStringProperty(String.format("%.0f",distances.get(i) - distances.get(i - 1))));
+            list.add(new SimpleStringProperty(String.format("%.4f",times.get(i) - times.get(i - 1))));
+            dijkstraTableView.getItems().add(list);
         }
-        return 0;
-    }
 
-    private String[] transformString(String str) {
-        String[] arr = str.split("\\s[-][>]\\s");
-        for (int i = 0; i < arr.length; i++) {
-            String forReplace =  arr[i].replaceAll("[(\\s)]", "");
-            arr[i] = forReplace.replaceAll("^\\d+.\\d+", "");
-        }
-        return arr;
-    }
-
-    private void loadDataToTable(String lastString) {
-        String[] vertexes = transformString(lastString);
-
-        ObservableList<SimpleStringProperty> list = FXCollections.observableArrayList();
-        list.add(new SimpleStringProperty(vertexes[0]));
-        list.add(new SimpleStringProperty(vertexes[vertexes.length - 1]));
-        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s\\d+.\\d+.", "")));
-        list.add(new SimpleStringProperty(lastString.replaceAll("\\s.+", "")));
-        list.add(new SimpleStringProperty(lastString.replaceAll("^\\d+\\s", "")
-                                                    .replaceAll("\\s.+", "")));
-        dijkstraTableView.getItems().add(list);
         totalCostsLabel.setText("0");
-
-        totalDistanceLabel.setText(lastString.replaceAll("\\s.+", "") + " км");
-        totalTimeLabel.setText(String.format("%.4f",Double.parseDouble(lastString.replaceAll("^\\d+\\s", "")
-                .replaceAll("\\s.+", ""))) + " ч");
+        totalDistanceLabel.setText(mapOfDistances.get(arrivalPoint) + " (км)");
+        totalTimeLabel.setText(mapOfTimes.get(arrivalPoint) + " (ч)");
 
     }
 
@@ -182,5 +137,19 @@ public class OutputDijkstraController implements Initializable {
                 number.setCellValue(observableList.get(i).getValue());
             }
         }
+    }
+
+    public void setDeparturePoint(String selectedItem) {
+        departurePoint = selectedItem;
+        beginnigRouteLabel.setText(departurePoint);
+    }
+
+    public void setArrivalPoint(String selectedItem) {
+        arrivalPoint = selectedItem;
+        endRouteLabel.setText(arrivalPoint);
+    }
+
+    public void setNewMapController(NewMapController newMapController) {
+        this.newMapController = newMapController;
     }
 }

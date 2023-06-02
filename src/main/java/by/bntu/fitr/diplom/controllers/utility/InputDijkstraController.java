@@ -39,19 +39,9 @@ public class InputDijkstraController extends Controller implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inputDijkstraAnchorPane.setStyle("-fx-background-color: skyblue");
 
-        startComboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                onComboBoxSelected(endComboBox, startComboBox);
-            }
-        });
+        startComboBox.setOnAction(event -> onComboBoxSelected(endComboBox, startComboBox));
 
-        endComboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                onComboBoxSelected(startComboBox, endComboBox);
-            }
-        });
+        endComboBox.setOnAction(event -> onComboBoxSelected(startComboBox, endComboBox));
 
         Platform.runLater(() -> {
             elements = newMapController.getLabelTitles();
@@ -63,8 +53,7 @@ public class InputDijkstraController extends Controller implements Initializable
 
     @FXML
     private void onShowRouteButtonClick() throws IOException {
-        if (startComboBox.getSelectionModel().getSelectedItem() != null
-                && endComboBox.getSelectionModel().getSelectedItem() != null) {
+        if (startComboBox.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/utility/output-dijkstra-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
@@ -81,7 +70,10 @@ public class InputDijkstraController extends Controller implements Initializable
             OutputDijkstraController controller = fxmlLoader.getController();
             controller.setNewMapController(newMapController);
             controller.setDeparturePoint(startComboBox.getSelectionModel().getSelectedItem());
-            controller.setArrivalPoint(endComboBox.getSelectionModel().getSelectedItem());
+            controller.setArrivalPoint(endComboBox.getSelectionModel().getSelectedItem()
+                    != null
+                    ? endComboBox.getSelectionModel().getSelectedItem()
+                    : endComboBox.getItems().get(endComboBox.getItems().size() - 1));
 
 
             stage.setScene(scene);
