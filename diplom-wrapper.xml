@@ -3,13 +3,13 @@
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
   <jar>C:\projects\diplom\out\artifacts\diplom_jar\diplom.jar</jar>
-  <outfile>C:\projects\diplom\out\artifacts\diplom_jar\diplom.exe</outfile>
-  <errTitle></errTitle>
+  <outfile>C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\DP2023_PRIGODICH_RU.exe</outfile>
+  <errTitle>Install an 18.0.2 java version</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
   <priority>normal</priority>
-  <downloadUrl></downloadUrl>
-  <supportUrl></supportUrl>
+  <downloadUrl>https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html</downloadUrl>
+  <supportUrl>https://github.com/Olegsander48/diplom</supportUrl>
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>

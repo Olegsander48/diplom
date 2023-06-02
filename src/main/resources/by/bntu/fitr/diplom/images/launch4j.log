@@ -1,0 +1,40 @@
+
+
+Version:	3.50
+CmdLine:	C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\DP2023_PRIGODICH_RU.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.018.000_002
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Users\prigo\.jdks\corretto-18.0.2
+Substitute:	PATH = C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PostgreSQL\15\bin;C:\sqlite;C:\Users\prigo\.jdks\corretto-18.0.2\bin;C:\Users\prigo\AppData\Local\Microsoft\WindowsApps;C:\Users\prigo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2022.3.1\bin;;C:\Users\prigo\.dotnet\tools;C:\sqlite;;C:\Users\prigo\.jdks\corretto-18.0.2\bin
+JRE paths:	C:\Users\prigo\.jdks\corretto-18.0.2;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PostgreSQL\15\bin;C:\sqlite;C:\Users\prigo\.jdks\corretto-18.0.2\bin;C:\Users\prigo\AppData\Local\Microsoft\WindowsApps;C:\Users\prigo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2022.3.1\bin;;C:\Users\prigo\.dotnet\tools;C:\sqlite;;C:\Users\prigo\.jdks\corretto-18.0.2\bin
+Check launcher:	C:\Users\prigo\.jdks\corretto-18.0.2\bin\javaw.exe (OK)
+Version string: 1.018.000_002 / 64-Bit (OK)
+Launcher:	C:\Users\prigo\.jdks\corretto-18.0.2\bin\javaw.exe
+Launcher args:	--module-path "C:\javafx-sdk-20.0.1\lib" --add-modules javafx.controls,javafx.fxml -jar "C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\DP2023_PRIGODICH_RU.exe"
+Args length:	178/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\DP2023_PRIGODICH_RU.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.018.000_002
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Users\prigo\.jdks\corretto-18.0.2
+Substitute:	PATH = C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PostgreSQL\15\bin;C:\sqlite;C:\Users\prigo\.jdks\corretto-18.0.2\bin;C:\Users\prigo\AppData\Local\Microsoft\WindowsApps;C:\Users\prigo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2022.3.1\bin;;C:\Users\prigo\.dotnet\tools;C:\sqlite;;C:\Users\prigo\.jdks\corretto-18.0.2\bin
+JRE paths:	C:\Users\prigo\.jdks\corretto-18.0.2;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PostgreSQL\15\bin;C:\sqlite;C:\Users\prigo\.jdks\corretto-18.0.2\bin;C:\Users\prigo\AppData\Local\Microsoft\WindowsApps;C:\Users\prigo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2022.3.1\bin;;C:\Users\prigo\.dotnet\tools;C:\sqlite;;C:\Users\prigo\.jdks\corretto-18.0.2\bin
+Check launcher:	C:\Users\prigo\.jdks\corretto-18.0.2\bin\javaw.exe (OK)
+Version string: 1.018.000_002 / 64-Bit (OK)
+Launcher:	C:\Users\prigo\.jdks\corretto-18.0.2\bin\javaw.exe
+Launcher args:	--module-path "C:\javafx-sdk-20.0.1\lib" --add-modules javafx.controls,javafx.fxml -jar "C:\projects\diplom\src\main\resources\by\bntu\fitr\diplom\images\DP2023_PRIGODICH_RU.exe"
+Args length:	178/32768 chars
+Exit code:	0
