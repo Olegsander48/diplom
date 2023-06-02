@@ -158,7 +158,6 @@ public class AddRoadController extends Controller implements Initializable {
                 Road newRoad = createRoad(startVertex, endVertex, 10, 10, 10, 10, 20);
                 checkRoads(startVertex, endVertex, newRoad, null);
             } else {
-                //todo финальная версия, но хотелось бы чтобы при угле +- 90 градусов ровнее отображалось
                 Road firstNewRoad, secondNewRoad;
                 if (endVertex.getMousePositionX() > startVertex.getMousePositionX() && endVertex.getMousePositionY() > startVertex.getMousePositionY()) {
                     firstNewRoad = createRoad(startVertex, endVertex, 15, 10, 10, 5, 20);

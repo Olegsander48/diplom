@@ -567,6 +567,10 @@ public class NewMapController implements Initializable {
                 vertexSize = vertexes.size() + 1;
                 roads = (List<Road>) ois.readObject();
                 scalesStep = ois.readDouble();
+
+                checkCollectionForSize(size -> size >= 2, addConnectionBtn, vertexes);
+                checkCollectionForSize(size -> size != 0, deleteVertexBtn, vertexes);
+                checkCollectionForSize(size -> size > 0, deleteConnectionBtn, roads);
             }
             catch(Exception ex){
                 ex.printStackTrace();
