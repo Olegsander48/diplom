@@ -62,19 +62,9 @@ public class AddRoadController extends Controller implements Initializable {
 
         roadClassComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
 
-        startComboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                onComboBoxSelected(endComboBox, startComboBox, backwardVertexBLabel, elements);
-            }
-        });
+        startComboBox.setOnAction(event -> onComboBoxSelected(endComboBox, startComboBox, backwardVertexBLabel, elements));
 
-        endComboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                onComboBoxSelected(startComboBox, endComboBox, backwardVertexALabel, elements);
-            }
-        });
+        endComboBox.setOnAction(event -> onComboBoxSelected(startComboBox, endComboBox, backwardVertexALabel, elements));
 
         Platform.runLater(() -> {
             elements = newMapController.getLabelTitles();

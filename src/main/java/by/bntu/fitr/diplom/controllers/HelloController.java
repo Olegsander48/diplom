@@ -64,7 +64,7 @@ public class HelloController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Карта " + mapCounter++);
         stage.setResizable(false);
-        stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/earth.png").toURI().toString()));
+        stage.getIcons().add(new Image("by/bntu/fitr/diplom/images/earth.png"));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(scene);
         stage.show();
@@ -104,7 +104,7 @@ public class HelloController implements Initializable {
         if (controller.loadDataFromFile(stage)) {
             stage.setTitle("Карта " + mapCounter++);
             stage.setResizable(false);
-            stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/earth.png").toURI().toString()));
+            stage.getIcons().add(new Image("by/bntu/fitr/diplom/images/earth.png"));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setScene(scene);
             stage.show();

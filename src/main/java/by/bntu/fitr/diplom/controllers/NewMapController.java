@@ -135,8 +135,8 @@ public class NewMapController implements Initializable {
      */
     @FXML
     private void onBlockMapButtonClick() {
-        Image open = new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/ci19открыто.png").toURI().toString());
-        Image close = new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/ci18закрыто.png").toURI().toString());
+        Image open = new Image("by/bntu/fitr/diplom/images/ci19открыто.png");
+        Image close = new Image("by/bntu/fitr/diplom/images/ci18закрыто.png");
         if (blockMapBtn.getText().equals("Блокировать карту")) {
             blockMapBtn.setText("Редактировать карту");
             blockMapImage.setImage(open);
@@ -224,10 +224,11 @@ public class NewMapController implements Initializable {
     /**
      * Метод, срабатывающий при нажатии на крестик окна с основной картой
      */
+
     public void onCloseWindowAction(String stageTitle) {
         loadNewWindow("views/utility/save-map-view.fxml",
                 stageTitle,
-                "src/main/resources/by/bntu/fitr/diplom/images/ci49дискета.png",
+                "by/bntu/fitr/diplom/images/ci49дискета.png",
                 Modality.APPLICATION_MODAL,
                 0);
     }
@@ -271,7 +272,7 @@ public class NewMapController implements Initializable {
                 }
 
                 stage.setResizable(false);
-                stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png").toURI().toString()));
+                stage.getIcons().add(new Image("by/bntu/fitr/diplom/images/add_vertex.png"));
                 stage.setScene(scene);
                 stage.show();
             } else {
@@ -396,7 +397,7 @@ public class NewMapController implements Initializable {
         if (vertexes.size() != 0) {
             loadNewWindow("views/utility/delete-vertex-view.fxml",
                     "Удалить вершину?",
-                    null,
+                    "by/bntu/fitr/diplom/images/remove.png",
                     Modality.APPLICATION_MODAL,
                     0);
         }
@@ -406,7 +407,7 @@ public class NewMapController implements Initializable {
     private void onAddConnectionBtnClick() {
         loadNewWindow("views/utility/add-road-view.fxml",
                 "Добавить маршрут",
-                null,
+                "by/bntu/fitr/diplom/images/add.png",
                 Modality.WINDOW_MODAL,
                 scalesStep);
     }
@@ -415,7 +416,7 @@ public class NewMapController implements Initializable {
     private void onDeleteConnectionBtnClick() {
         loadNewWindow("views/utility/delete-road-view.fxml",
                 "Удалить маршрут?",
-                null,
+                "by/bntu/fitr/diplom/images/remove.png",
                 Modality.APPLICATION_MODAL,
                 0);
     }
@@ -474,7 +475,7 @@ public class NewMapController implements Initializable {
         if (vertexes.size() >= 2 && roads.size() != 0) {
             loadNewWindow("views/utility/floyd-algorithm-view.fxml",
                     "Алгоритм флойда: " + ((Stage) addSubstrateBtn.getScene().getWindow()).getTitle(),
-                    "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
+                    "by/bntu/fitr/diplom/images/add_vertex.png",
                     Modality.WINDOW_MODAL,
                     0);
         } else {
@@ -491,7 +492,7 @@ public class NewMapController implements Initializable {
     private void onDijkstraAlgorithmButtonClick() {
         loadNewWindow("views/utility/input-dijkstra-view.fxml",
                 "Выбор маршрута",
-                "src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png",
+                "by/bntu/fitr/diplom/images/add_vertex.png",
                 Modality.APPLICATION_MODAL,
                 0);
 
@@ -652,7 +653,7 @@ public class NewMapController implements Initializable {
         stage.setResizable(false);
         stage.initModality(modality);
         if (iconPathFromContentRoot != null) {
-            stage.getIcons().add(new Image(new File(iconPathFromContentRoot).toURI().toString()));
+            stage.getIcons().add(new Image(iconPathFromContentRoot));
         }
 
         ((Controller) fxmlLoader.getController()).setNewMapController(this);

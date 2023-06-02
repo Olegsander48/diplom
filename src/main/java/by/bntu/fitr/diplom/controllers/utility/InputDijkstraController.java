@@ -65,7 +65,7 @@ public class InputDijkstraController extends Controller implements Initializable
                     + " ПУТЬ");
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/add_vertex.png").toURI().toString()));
+            stage.getIcons().add(new Image("by/bntu/fitr/diplom/images/add_vertex.png"));
 
             OutputDijkstraController controller = fxmlLoader.getController();
             controller.setNewMapController(newMapController);

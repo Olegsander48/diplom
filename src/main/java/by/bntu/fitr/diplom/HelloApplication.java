@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.getIcons().add(new Image(new File("src/main/resources/by/bntu/fitr/diplom/images/main-logo.png").toURI().toString()));
+        stage.getIcons().add(new Image("by/bntu/fitr/diplom/images/main-logo.png"));
         stage.setTitle("Дипломный проект");
         stage.show();
     }
