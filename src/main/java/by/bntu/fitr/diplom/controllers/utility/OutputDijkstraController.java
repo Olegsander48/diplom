@@ -122,7 +122,7 @@ public class OutputDijkstraController implements Initializable {
 
         totalCostsLabel.setText("0");
         totalDistanceLabel.setText(mapOfDistances.get(arrivalPoint) + " (км)");
-        totalTimeLabel.setText(mapOfTimes.get(arrivalPoint) + " (ч)");
+        totalTimeLabel.setText(String.format("%.4f",mapOfTimes.get(arrivalPoint)) + " (ч)");
 
     }
 
